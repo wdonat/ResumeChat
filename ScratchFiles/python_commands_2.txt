@@ -1,0 +1,146 @@
+def chunkSeparator(text_file):
+    character_split_texts = character_splitter.split_text(text_file)
+    print(character_split_texts[:-1]
+    print(f'\nTotal chunks: {len(character_split_texts)}')
+def chunkSeparator(text_file):
+    character_split_texts = character_splitter.split_text(text_file)
+    print(character_split_texts[:-1])
+    print(f'\nTotal chunks: {len(character_split_texts)}')
+file = '/home/wolfram/Code/ResumeChatbot/HomerSimpson.pdf'
+reader = PdfReader(file)
+file = '/home/wolfram/Code/ResumeChatbot/Resumes/HomerSimpson.pdf'
+reader = PdfReader(file)
+pdf_texts = [p.extract_text().strip() for p in reader.pages]
+pdf_texts = [text for text in pdf_texts if text]
+character_split_texts = character_splitter.split_text('\n\n'.join(pdf_texts))
+character_split_texts
+token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
+token_split_texts = []
+for text in character_split_texts:
+    token_split_texts += token_splitter.split_text(text)
+token_split_texts
+personal_info = ''
+for line in token_split_texts:
+    personal_info += line
+personal_info
+resume_text = docx2txt.process('/home/wolfram/Code/ResumeChatbot/Resumes/FirstLast.docx')
+resume_text
+character_split_texts
+resume_text
+token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
+token_split_texts = []
+for text in resume_text:
+    token_split_texts += token_splitter.split_text(text)
+token_split_texts
+type(resume_text)
+for text in resume_text:
+    print(text)
+resume_text
+resume_text = resume_text.replace('\n', ' ')
+resume_text
+resume_text = resume_text.replace('\t', '')
+resume_text
+token_split_texts = []
+token_split_texts += resume_text
+token_split_texts
+token_split_texts = []
+token_split_texts.append(resume_text)
+token_split_texts
+character_split_texts
+len(character_split_texts)
+character_split_texts[[]
+]
+character_split_texts[0]
+character_split_texts[1]
+token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
+for text in token_split_texts:
+    print(text)
+t_split_texts - []
+t_split_texts = []
+t_split_texts.append(resume_text)
+for text in t_split_texts:
+token_split_texts = []
+for text in t_split_texts:
+    token_split_texts += token_splitter.split_text(text)
+token_split_texts
+character_split_texts
+type(token_split_texts)
+len(token_split_texts)
+type(character_split_texts)
+len(character_split_texts)
+
+embedding_function
+
+from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+embedding_function = SentenceTransformerEmbeddingFunction()
+
+chroma_client = chromadb.Client()
+
+chroma_collection = chroma_client.create_collection('first_last', embedding_function=embedding_function)
+
+first_last_chroma_collection = chroma_client.create_collection('first_last', embedding_function=embedding_function)
+
+chroma_client.delete_collection('first_last')
+
+first_last_chroma_collection = chroma_client.create_collection('first_last', embedding_function=embedding_function)
+
+homer_simpson_chroma_collection = chroma_client.create_collection('homer_simpson', embedding_function=embedding_function)
+
+ids = [str(i) for i in range(len(token_split_texts))]
+
+first_last_chroma_collection.add(ids=ids, documents=token_split_texts)
+
+
+homer_ids = [str(i) for i in range(len(character_split_texts))]
+
+homer_simpson_chroma_collection.add(ids=homer_ids, documents=character_split_texts)
+
+homer_simpson_chroma_collection.count()
+
+first_last_chroma_collection.count()
+query = 'Is he interested in onsite work?'
+results = first_last_chroma_collection.query(query_text=[query], n_results=5)
+results = first_last_chroma_collection.query(query_texts=[query], n_results=5)
+
+first_last_results = first_last_chroma_collection.query(query_texts=[query], n_results=2)
+
+homer_simpson_results = homer_simpson_chroma_collection.query(query_texts=[query], n_results=2)
+
+first_documents = first_last_results['documents'][0]
+
+first_documents
+
+first_output = rag(query=query, retrieved_documents=first_documents)
+
+def rag(query, retrieved_documents, model="gpt-3.5-turbo"):
+    information = '\n\n'.join(retrieved_documents)
+    messages = [{"role": "system", "content": "You are a helpful personal assistant. Your users are asking questions about information contained in a person's resume. You will be shown the user's question and the relevant information from the resume. Answer the user's question using only this information"}, {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
+    response = openai_client.chat.completions.create(model=model, messages=messages,)
+    content = response.choices[0].message.content
+    return content
+
+first_output = rag(query=query, retrieved_documents=first_documents)
+openai.api_key
+import openai
+from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
+import os
+openai.api_key = os.getenv('OPENAI_API_KEY')
+openai_client = OpenAI()
+first_output = rag(query=query, retrieved_documents=first_documents)
+print(first_output)
+homer_results
+homer_simpson_results
+homer_documents = homer_simpson_results['documents'][0]
+homer_output = rag(query=query, retrieved_documents=homer_documents)
+print(homer_output)
+import readline
+for i in range(readline.get_current_history_length()):
+    with open('command_history.txt', 'a') as f:
+        f.write(readline.get_history_item(i + 1))
+        f.write('\n')
+for i in range(readline.get_current_history_length()):
+    print(readline.get_history_item(i + 1))
+>>> 

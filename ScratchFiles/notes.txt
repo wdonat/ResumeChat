@@ -1,0 +1,110 @@
+Stripe payment subscription link:
+https://buy.stripe.com/9AQaI65VQgDPaBy288
+
+Stripe customer portal link:
+https://billing.stripe.com/p/login/fZe7sQ16G2Fm9UsfYY
+
+Stripe test customer portal link:
+https://billing.stripe.com/p/login/test_00gaFa9mX7qB6646oo
+
+Code for Stripe to disable two-step authentication if necessary: 
+zxwf-czia-ezfl-xryy-lsfb
+
+Instance IP address:
+34.135.217.92
+
+
+1. Prompt
+2. Knowledge
+3. Action
+
+Assistants API
+
+
+
+
+Homer wants remote or hybrid, full-time or part-time, NOT contract, will travel, will not relocate, is currently looking hard for work, can start immediately, has no current or past projects, is skilled with nuclear reactor control, and is looking for similar roles
+link_id: abc123
+
+First Last wants onsite only, fulltime, not partime or contract, will travel, will relocate, just browsing, needs two weeks notice, had a senior design project but no current projects, wants to be an engineer and is looking for that role
+link_id: xyz321
+
+
+Once you SUBMIT from editInfo.html page (for the first time):
+
+Resume information (from PDF or DOCX) is extracted into text - resume_info.txt.
+Answers to questions are converted to sentences.
+Those sentences are appended to resume_info.txt.
+resume_info.txt is then stored in the database.
+For queries, resume_info.txt is retrieved from the db and added to a chromadb collection using embedding function.
+
+If SUBMITTING from editInfo.html (subsequent times):
+If new resume is uploaded:
+    ALERT user that he/she should scroll to the bottom and press SUBMIT, changing anything necessary along the way
+    Once SUBMIT is pressed, it's just like its's being submitted for the first time
+If no new resume is uploaded:
+
+
+
+token_split_texts is a list of the information in First Last's resume
+first_last_chroma_collection is the chroma collection for that list, with embeddings
+need to append the following:
+
+character_split_texts is a list of information in Homer's resume
+homer_simpson_chroma_collection is the collection for homer's list, with embeddings
+Need to append:
+
+
+Things to do:
+
+Edit DB: 
+    I want extracted resume text kept separate, in addition to the combined "info" cell
+    This will allow me to change just the text if the customer uploads a new resume but leaves everything else the same
+
+Set "login" to 1 (state? session?) when user is logged in
+    Set to zero after certain amount of inactivity? No?
+
+rdonat - password123 - Aa88Yh
+rheck - defaultpassword - JtrEly
+
+
+
+
+url1 = 'http://10.128.0.3:8000/api/v1/commandHandler'
+headers = {}
+
+
+External IP: 34.135.217.92
+Internal IP: 10.128.0.3
+169.254.169.254
+
+resource.type="gce_subnetwork"
+logName="projects/resumechat/logs/compute.googleapis.com%2Ffirewall"
+
+
+resumechatserviceaccount@resumechat.iam.gserviceaccount.com
+
+
+
+🚀 **Exciting News: I’m Launching Resume-Chat.ai!** 🚀
+
+After months of hard work, I'm proud to unveil something I truly believe could transform how we connect with opportunities: Resume-Chat.ai. This tool is close to my heart as it addresses many flaws I've seen in the hiring process.
+
+🤖 **What’s Resume-Chat.ai?**
+It’s an AI-powered chatbot that brings your resume to life, making your job search more interactive and personable. This isn’t just a new software—it’s a new way to think about job searching.
+
+📈 **Features Include:**
+- **Interactive Experience**: Your professional story told through a conversational AI.
+- **Accessibility**: It’s ready when you are, making your resume available 24/7 to answer any recruiter's questions.
+- **Insightful**: It goes deeper than a paper resume, discussing your skills and aspirations.
+
+🔧 **How It Works:**
+1. **Upload Your Resume**: Just your resume and some basic info.
+2. **AI Does the Rest**: It crafts a chatbot personalized to reflect your professional essence.
+3. **Share and Connect**: You’ll get a link to your chatbot, ready to be shared with the world.
+
+I see Resume-Chat.ai as more than a tool—it’s a step towards making job searches less daunting and more human. Check it out and let me know what you think! [Insert link to product page]
+
+#ResumeChatAI #InnovationInRecruiting #AI #TechForGood
+
+

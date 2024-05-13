@@ -1,0 +1,80 @@
+John Doe
+
+123 Name St, City, State 01234
+
+john.doe@gmail.com
+
+(123) 456 -7890
+
+Objective
+
+Obtain a full time entry level engineering position that requires strong problem solving and communication skills
+
+
+Education
+
+University of Arkansas, Little Rock, Arkansas 
+
+Bachelor of Science in Mechanical Engineering, GPA 3.27/4.00 May 2018
+
+
+Senior Design Project
+
+Boeing '''City, State * Determined the wear properties of Fiber Reinforced Aluminum to evaluate its usability in aircraft components 
+* Conducted a literature review to document the known material properties of FRA such as weight, strength, and wear resistance
+* Made several modifications to the full scale wear test and increased its robustness by applying four times the original load 
+* Designed and manufactured a small scale wear test to provide additional data and to validate conclusions
+* Designed the components of the full scale and small scale wear test using SolidWorks 
+* Machined the components of the full scale and small scale wear test on campus using a mill and a lathe
+
+
+Awards
+Engineering Scholarship   Fall 2014, Spring 2015
+Dean’s List Scholar   Fall 2011, Spring 2012
+
+
+== Work Experience  ==
+
+'''Company, '''City, State  May 2018 – Present 
+
+Electrical Assistant* Supported the installation, maintenance, and repair of electrical systems in commercial, residential, and industrial buildings 
+* Installed lighting fixtures, electrical outlets, circuit breakers, switches, and other electrical devices
+* Repaired any issues with existing electrical systems or replaced any devices that could not be fixed 
+* Created proposals and invoices using excel giving the customers a detailed overview of all the costs of a project 
+* Communicated directly with customers in order to answer any inquiries and to provide assistance 
+
+
+'''Company, '''City, State 
+
+Intern in the Engine & Control Systems Department ''' '''May 2014 – August 2014* Created a layout of the bench hydraulic system and the ignition monitoring system to support installation and submitted an action request for an initial record and file
+* Supported the completion of Standard Work activity pages and task tailoring for the EEC modification project 
+* Complied with export and import policies by using the I-class tool to classify the drawings created 
+* Demonstrated commitment to the highest standards of ethics and business conduct in accordance with the code of ethics
+
+
+
+== Leadership  ==
+
+'''Company, '''City, State 
+
+Intern  May 2014 – August 2014* Actively participated in professional and leadership development workshops to improve skillset 
+* Planned and organized community service activities with a team of interns 
+* Communicated with manager by scheduling monthly advising sessions 
+
+
+
+Technical Skills
+* Microsoft Office (Word, Excel, PowerPoint, Outlook, Visio) 
+* SolidWorks 
+* ANSYS
+* MATLAB
+* LabVIEW
+
+
+
+Languages
+* Fluent in English and Spanish
+
+
+
+

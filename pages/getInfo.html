@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Resume Chat</title>
+
+<meta name="Author" content="Wolfram Donat" />
+<meta name="copyright" content="2024 Wolfram Donat" />
+<meta name="date" content="2024-01-01" />
+<meta name="Description" lang="us" content="" />
+<meta name="Keywords" content="" />
+<meta name="Robots" content="Index, All" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1366">
+
+<link rel="shortcut icon" type="image/png" href="static/images/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="static/styles/styles.css" />
+
+<script src="static/scripts/server-communication.js"></script>
+<script src="static/scripts/custom-select.js"></script>
+<script src="static/scripts/util.js"></script>
+<script src="static/scripts/system-dialog.js"></script>
+<script src="static/scripts/auth.js"></script>
+
+<script>
+
+	document.addEventListener('contextmenu', event => event.preventDefault());
+
+	function submitInfo()
+	{
+		let command = "submitInfo";
+		postToServer(command, { }, submitInfoResponse);
+
+		return true;
+	}	
+
+	function submitInfoResponse(response)
+	{
+		if (response.responseCode == '0')
+		{
+			window.location.href="login.html";
+		}
+		else
+			return true;
+	}
+	
+	function createARK()
+	{
+		let command = "createARK";
+		let arkInfo = {'time': '12', 'latitude': '34.3', 'longitude': '117.44', 'soft_rev': '1.0', 'modem_id': '13F34455'}
+		postToServer(command, arkInfo, createARKResponse);
+	}
+
+	function createARKResponse(response)
+	{
+		if (response.responseCode != "0")
+			alertCustom("ARK created");
+		return true;
+	}
+
+	function viewARKs()
+	{
+		window.location.href = "viewARKS.html";
+	}
+
+	function manageEquipment()
+	{
+		window.location.href = "manageEquipment.html";
+	}
+
+	function analytics()
+	{
+		window.location.href = "analytics.html";
+	}
+
+</script>
+
+</head>
+<body>
+	<div id="divWaitingScreen" class="waitingScreen hidden">
+  		<img src="static/images/spinner.gif" class="waitingScreenSpinner" />
+ 	</div>
+
+	<div id="divMainContainer" class="container homeBackground relativeContainer"> 
+ 		<div class="homeLogo">
+  			<img src="static/images/index_logo.png">
+ 		</div>
+ 		<div id="divIndexTitle" class="indexTitle">
+ 			<img src="static/images/title.png">
+ 		</div>
+
+ 	<ul class="homeMenu">
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: viewARKs();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/list_white_button.png">
+    			</div>
+    			<div class="homeMenuElementText">VIEW<br>ARKs</div>
+ 			</a>
+ 		</li>
+
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: manageEquipment();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/home_setup.png">
+    			</div>
+    			<div class="homeMenuElementText">MANAGE<br>EQUIPMENT</div>
+ 			</a>
+ 		</li>
+
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: analytics();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/header_analytics.png">
+ 				</div>
+ 				<div class="homeMenuElementText">ANALYTICS</div>
+ 			</a>
+ 		</li>
+ 	</ul>
+
+	</div>
+
+	<script>
+
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var link_id = url.searchParams.get("id");
+
+		initSystemDialog("divMainContainer");
+		initCustomSelectElements("custom-select-static");
+
+	</script>
+
+</body>
+</html>

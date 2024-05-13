@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Resume Chat</title>
+
+<meta name="Author" content="Wolfram Donat" />
+<meta name="copyright" content="2024 Wolfram Donat" />
+<meta name="date" content="2024-02-01" />
+<meta name="Description" lang="us" content="" />
+<meta name="Keywords" content="" />
+<meta name="Robots" content="Index, All" />
+<meta charset="UTF-8">
+<!-- <meta name="viewport" content="width=1366"> -->
+
+<link rel="shortcut icon" type="image/png" href="static/images/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="static/styles/styles.css" />
+
+<script src="static/scripts/server-communication.js"></script>
+<script src="static/scripts/system-dialog.js"></script>
+<script src="static/scripts/auth.js"></script>
+
+<script>
+
+	document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+	function signUp()
+	{
+		window.location.href = "signup.html";
+	}
+
+	function login()
+	{
+		window.location.href = "login.html";
+	}
+
+	function examples()
+	{
+		window.location.href = "examples.html";
+	}
+
+	function faq()
+	{
+		window.location.href = "faq.html";
+	}
+
+  function buy()
+  {
+      window.location.href = "https://buy.stripe.com/test_eVabMx1GG1WPeFGaEF";
+  }
+
+</script>
+
+</head>
+<body>
+
+	<div id="divMainContainer" class="container homeBackground relativeContainer"> 
+		<div class="homeLogo">
+			<img src="static/images/index_logo_title.png">
+		</div>
+
+ 		<div class="generalInfoTitle">
+ 			<center>Welcome to Resume-Chat.ai – The Future of Job Seeking!<br><br></center>
+ 			<center>Unlock the Power of <font style="color: red">AI</font> to Showcase Your Professional Persona!<br></center>
+ 		</div>
+
+ 		<br><br><br><br>
+ 		
+ 		<center>
+ 			<!-- https://buy.stripe.com/28o03s1FAbjv10Y3cd - Actual link -->
+ 			<!-- https://buy.stripe.com/test_eVabMx1GG1WPeFGaEF - Test link -->
+ 			 <a href="https://buy.stripe.com/test_eVabMx1GG1WPeFGaEF"><img src="static/images/basic_plan.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+ 			<img src="static/images/deluxe_plan.png">
+ 			<br><br><br>
+ 			<a href="login.html"><font style="color: blue; font-size: 24px">Have an account? Login HERE</font></a>
+ 		</center>
+
+
+ 	<ul class="homeMenu">
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: login();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/home_admin.png">
+ 				</div>
+ 				<div class="homeMenuElementText">LOG IN</div>
+ 			</a>
+ 		</li>
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: examples();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/examples.png">
+ 				</div>
+ 				<div class="homeMenuElementText">EXAMPLES</div>
+ 			</a>
+ 		</li>
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: faq();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/faq.png">
+ 				</div>
+ 				<div class="homeMenuElementText">FAQ</div>
+ 			</a>
+ 		</li>
+ 	</ul>
+ 	<br><br><br><br>
+
+	</div>
+
+	<script>
+		initSystemDialog("divMainContainer");
+	</script>
+
+</body>
+</html>

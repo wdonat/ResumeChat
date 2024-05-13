@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Resume Chat</title>
+
+<meta name="Author" content="Wolfram Donat" />
+<meta name="copyright" content="2024 Wolfram Donat" />
+<meta name="date" content="2024-02-01" />
+<meta name="Description" lang="us" content="" />
+<meta name="Keywords" content="" />
+<meta name="Robots" content="Index, All" />
+<meta charset="UTF-8">
+<!-- <meta name="viewport" content="width=1366"> -->
+
+<link rel="shortcut icon" type="image/png" href="static/images/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="static/styles/styles.css" />
+
+<script src="static/scripts/server-communication.js"></script>
+<script src="static/scripts/system-dialog.js"></script>
+<script src="static/scripts/auth.js"></script>
+
+<script>
+
+	document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+	function signUp()
+	{
+		window.location.href = "signup.html";
+	}
+
+	function login()
+	{
+		window.location.href = "login.html";
+	}
+
+	function examples()
+	{
+		window.location.href = "examples.html";
+	}
+
+	function faq()
+	{
+		window.location.href = "faq.html";
+	}
+
+	function homerChat()
+	{
+		window.open("chat.html?id=abc123");
+	}
+
+	function firstChat()
+	{
+		window.open("chat.html?id=xyz321");
+	}
+
+</script>
+
+</head>
+<body>
+
+	<div id="divMainContainer" class="container homeBackground relativeContainer"> 
+		<a href="index.html">
+    		<div class="homeLogo">
+        		<img src="static/images/index_logo_title.png">
+      		</div>
+    	</a>
+
+ 		<div class="generalInfoTitle">
+ 			<center>EXAMPLE #1 – HOMER SIMPSON<br><br></center>
+ 		</div>
+ 		<div class="generalInfoInfo">
+ 			Homer is looking for a new job. You can have a look at his resume <a href="resumes/HomerSimpson.pdf">here.</a><br><br>
+ 			Based on his responses, Homer is looking for either hybrid or fully-remote work, full-time or part-time, but NOT contract.<br><br>
+ 			He is willing to travel for work, but is not interested in relocating. He's looking desperately for work and can start immediately.<br><br>
+ 			He has no past or current projects to speak of, lists "Nuclear reactor management" as his skills, and is looking for similar roles.<br><br>
+ 			Click <a href="resumes/homer_chat.m4v">here</a> to see it in action, or click experience what it's like to chat with Homer's resume, or click <a href="javascript: homerChat();">here</a> to try it for yourself!
+ 			<br><br>
+ 			<a href="resumes/HomerSimpson.pdf">
+ 				<img src="static/images/homer_simpson.png" width="300" class="resumeImage">
+ 			</a>
+ 			<br><br><br><br><br>
+
+ 		</div>
+ 		<div class="generalInfoTitle">
+ 			<center>EXAMPLE #2 – FIRST LAST<br><br></center>
+ 		</div>
+ 		<div class="generalInfoInfo">
+ 			First Last (his parents were from somewhere far, far away) is also looking for work.
+ 			See his resume <a href="resumes/FirstLast.pdf">here.</a><br><br>
+ 			Based on his responses to the questions, he's looking for full-time, onsite-only employment.<br><br>
+ 			He's willing to travel for work, and is also willing to relocate.<br><br>
+ 			Since he's currently employed, he needs to give two weeks' notice, and is just casually browsing employment opportunities.<br><br>
+ 			He's got a senior design project he talks about, he wants to be an engineer, and is looking for a role with that title.<br><br>
+ 			Click <a href="resumes/first_chat.m4v">here</a> to see it in action, or click <a href="javascript: firstChat();">here</a> to chat with First Last's information for yourself!
+
+ 			<br><br>
+ 			<a href="resumes/FirstLast.pdf">
+	 			<img src="static/images/first_last.png" width="300" class="resumeImage">
+	 		</a>
+ 		</div>
+ 		<br><br><br><br><br>
+ 		<div class="generalInfoTitle">
+ 			<center>Get Started Today -- Your next career opportunity is just a chat away!<br><br></center>
+ 			<center>Try Resume-Chat.ai now and transform your job search journey!</center>
+ 		</div>
+
+ 	<ul class="homeMenu">
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: signUp();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/signup.png">
+    			</div>
+    			<div class="homeMenuElementText">SIGN UP</div>
+ 			</a>
+ 		</li>
+
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: login();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/home_admin.png">
+ 				</div>
+ 				<div class="homeMenuElementText">LOG IN</div>
+ 			</a>
+ 		</li>
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: faq();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/faq.png">
+ 				</div>
+ 				<div class="homeMenuElementText">FAQ</div>
+ 			</a>
+ 		</li>
+ 	</ul>
+ 	<br><br><br><br>
+
+	</div>
+
+	<script>
+		initSystemDialog("divMainContainer");
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Resume Chat</title>
+
+<meta name="Author" content="Wolfram Donat" />
+<meta name="copyright" content="2024 Wolfram Donat" />
+<meta name="date" content="2024-02-01" />
+<meta name="Description" lang="us" content="" />
+<meta name="Keywords" content="" />
+<meta name="Robots" content="Index, All" />
+<meta charset="UTF-8">
+
+<link rel="shortcut icon" type="image/png" href="static/images/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="static/styles/styles.css" />
+
+<script src="static/scripts/server-communication.js"></script>
+<script src="static/scripts/system-dialog.js"></script>
+<script src="static/scripts/auth.js"></script>
+
+<script>
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    var userName;
+
+    function signUp()
+    {
+        window.location.href = "signup.html";
+    }
+
+    function login()
+    {
+        window.location.href = "login.html";
+    }
+
+    function examples()
+    {
+        window.location.href = "examples.html";
+    }
+
+    function faq()
+    {
+        window.location.href = "faq.html";
+    }
+
+    function deleteChatInfo()
+    {
+        console.log('got here');
+        postToServer('deleteChatInfo', { }, processDeleteChatInfoResponse);
+    }
+
+    function processDeleteChatInfoResponse(response)
+    {
+        window.close();
+    }
+
+    function getChatWindowUserInfo()
+    {
+        console.log("getting info");
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var g_userID = url.searchParams.get("id");
+        // console.log(g_userID);
+        postToServer("getChatWindowUserInfo", g_userID, processGetChatWindowUserInfoResponse);
+    }
+
+    function processGetChatWindowUserInfoResponse(response)
+  {
+      console.log(response.responseCode);
+      console.log(response.responseMessage);
+        if(response.responseCode == 1)
+        {
+            userName = response.responseMessage;
+            // console.log(userName);
+            var chatTitleContent = "Chat with " + userName + "'s AI assistant";
+            document.getElementById("chatTitle").innerHTML = chatTitleContent;
+        }
+        else
+            return true;
+    }
+
+    function sendChatMessage()
+    {
+        // Extract text from document.getElementById("chatForm") and send it along
+        var chat = document.getElementById("chatForm").value;
+        var chatArray = chat.split('\n\n');
+        // console.log(chatArray);
+        var lastQuestion = '';
+        if(chatArray.length > 1)
+            lastQuestion = chatArray[chatArray.length - 1];
+        else
+            lastQuestion = chatArray[0];
+        console.log(lastQuestion);
+        postToServer("sendChatMessage", lastQuestion , processSendChatMessageResponse);
+    }
+
+    function processSendChatMessageResponse(response)
+    {
+        var prevContent = document.getElementById("chatForm").value + "\n\n";
+        var contentArray = prevContent.split("\n\n");
+
+        htmlContent = "<center><textarea id='chatForm' name='msg' rows='24' cols='40' required>" + prevContent + "AI: " + response.responseMessage + "\n\n" + "</textarea></center>"
+        document.getElementById("divChatWindow").innerHTML = htmlContent;
+    }
+
+
+</script>
+
+</head>
+<body>
+    <div id="divMainContainer" class="chatContainer homeBackground relativeContainer">
+        <br><br>
+
+        <form id="divChatForm">
+            <center><div id="chatTitle" class="chatTitle">Please wait... Loading info...</div></center>
+            <br><br>
+            <div id="divChatWindow">
+                <center><textarea id="chatForm" placeholder="You can ask about salary requirements, relocation preferences, where they are in the job search, or even about past or current projects" name="msg" rows="24" cols="40" required></textarea></center>
+            </div>
+            <br>
+            <center>
+                <button type="button" class="submitButton" onclick="javascript: sendChatMessage();">SEND</button>
+                <button type="button" class="submitButton" onclick="javascript: deleteChatInfo();">CLOSE</button>
+            </center>
+        </form>
+    </div>
+
+    <script>
+        initSystemDialog("divMainContainer");
+        getChatWindowUserInfo();
+    </script>
+</body>

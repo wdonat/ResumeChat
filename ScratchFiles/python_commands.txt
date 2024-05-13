@@ -1,0 +1,151 @@
+import chromadb
+import chroma
+help(chroma)
+import dotenv
+from pypdf import PDFReader
+import pypdf
+from pypdf import PdfReader
+reader = PdfReader('Donat_2023_SPE.pdf')
+pdf_texts = [text for text in pdf_texts if text]
+pdf_texts = [p.extract_text().strip() for p in reader.pages]
+pdf_texts = [text for text in pdf_texts if text]
+print(pdf_texts[0])
+from langchain.text_splitter import RecursiveCharacterTextSplitter, SentenceTransformersTokenTextSplitter
+character_splitter = RecursiveCharacterTextSplitter(
+    separators=["\n\n", "\n", ". ", " ", ""],
+    chunk_size=1000,
+    chunk_overlap=0
+)
+character_split_texts = character_splitter.split_text('\n\n'.join(pdf_texts))
+print(f"\nTotal chunks: {len(character_split_texts)}")
+print(character_split_texts[6])
+token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
+token_split_texts = []
+for text in character_split_texts:
+    token_split_texts += token_splitter.split_text(text)
+print(f"\nTotal chunks: {len(token_split_texts)}")
+import chromadb
+from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+embedding_function = SentenceTransformerEmbeddingFunction()
+print(embedding_function([token_split_texts[6]]))
+chroma_client = chromadb.Client()
+chroma_collection = chroma_client.create_collection("microsoft_annual_report_2022", embedding_function=embedding_function)
+chroma_collection = chroma_client.create_collection("donat_spe_2023", embedding_function=embedding_function)
+ids = [str(i) for i in range(len(token_split_texts))]
+chroma_collection.add(ids=ids, documents=token_split_texts)
+chroma_collection.count()
+query = 'What is his email address?'
+results = chroma_collection.query(query_texts=[query], n_results=5)
+retrieved_documents = results['documents'][0]
+for document in retrieved_documents:
+    print(document)
+    print('\n')
+from dotenv import load_dotenv
+load_dotenv()
+import os
+import openai
+from openai import OpenAI
+openai.api_key = os.env('OPENAI_API_KEY')
+openai.api_key = os.getenv('OPENAI_API_KEY')
+openai.api_key
+openai_client = OpenAI()
+def rag(query, retrieved_documents, model="gpt-3.5-turbo"):
+    information = "\n\n".join(retrieved_documents)
+messages = [{"role": "system", "content": "You are a helpful personal assistant. Your users are asking questions about information contained in a person's resume. You will be shown the user's question and the relevant information from the resume. Answer the user's question using only this information"}, {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
+def rag(query, retrieved_documents, model="gpt-3.5-turbo"):
+    information = "\n\n".join(retrieved_documents)
+    messages = [{"role": "system", "content": "You are a helpful personal assistant. Your users are asking questions about information contained in a person's resume. You will be shown the user's question and the relevant information from the resume. Answer the user's question using only this information"}, {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
+def rag(query, retrieved_documents, model="gpt-3.5-turbo"):
+    information = "\n\n".join(retrieved_documents)
+    messages = [{"role": "system", "content": "You are a helpful personal assistant. Your users are asking questions about information contained in a person's resume. You will be shown the user's question and the relevant information from the resume. Answer the user's question using only this information"}, {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
+def rag(query, retrieved_documents, model="gpt-3.5-turbo"):
+    information = "\n\n".join(retrieved_documents)
+    messages = [{"role": "system", "content": "You are a helpful personal assistant. Your users are asking questions about information contained in a person's resume. You will be shown the user's question and the relevant information from the resume. Answer the user's question using only this information"}, {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
+    response = openai_client.chat.completions.create(model=model, messages=messages,)
+    content = response.choices[0].message.content
+    return content
+output = rag(query=query, retrieved_documents=retrieved_documents)
+print(output)
+with open('resume_info.txt', 'r') as f:
+    texts = f.strip()
+with open('resume_info.txt', 'r') as f:
+    texts = f.readlines()
+texts
+resume = [text for text if texts if text]
+resume = [text for text in texts if text]
+resume
+len(resume)
+resume[80:]
+resume[70:]
+resume[60:]
+resume[62]
+resume[65]
+resume[67]
+resume[68]
+resume[68].split()
+resume[68].split()[0]
+resume[68].split()[0][0]
+resume[68].split()[0][1]
+resume[68].split()[0][0].decode()
+resume[68].split()[0]
+resume[68]
+x = resume[68].split()[0]
+x
+x = resume[68].split()[0][0]
+x
+resume[68].replace(x, '')
+for line in texts:
+    if x in line:
+        line = line.replace(x, '')
+texts
+for line in texts:
+    if x in line:
+        print(line)
+resume
+texts
+resume
+personal_info = []
+for line in resume:
+    if x in line:
+        line.replace(x, '')
+    personal_info.append(line)
+personal_info
+personal_info = []
+for line in resume:
+    if x in line:
+        new_line = line.replace(x, '')
+    else:
+        new_line = line
+    personal_info.append(new_line)
+personal_info
+character_split_texts = character_splitter.split_text(personal_info)
+personal_info_string = ''
+for line in personal_info:
+    personal_info_string += line
+personal_info_string
+character_split_texts = character_splitter.split_text(personal_info)
+character_split_texts = character_splitter.split_text(personal_info_string)
+print(character_split_texts[25])
+print(len(character_split_texts))
+print(character_split_texts[6])
+print(character_split_texts[3])
+token_split_texts = []
+for text in character_split_texts:
+    token_split_texts += token_splitter.split_text(text)
+len(token_split_texts)
+print(embedding_function([token_split_texts[4]]))
+chroma_client = chromadb.Client()
+chroma_collection = chroma_client.create_collection('personal_info', embedding_function=embedding_function)
+ids = [str(i) for i in range(len(token_split_texts))]
+chroma_collection.add(ids=ids, documents=token_split_texts)
+
+
+chroma_collection.count()
+
+
+query = 'Is he interested in onsite work?'
+results = chroma_collection.query(query_texts=[query], n_results=5)
+retrieved_documents = results['documents'][0]
+retrieved_documents
+output = rag(query=query, retrieved_documents=retrieved_documents)
+print(output)

@@ -1,0 +1,1135 @@
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.woff2') format('woff2'),
+    	url('../fonts/Roboto-Regular.woff') format('woff'),
+    	url('../fonts/Roboto-Regular.otf') format('opentype');
+    font-weight: normal;
+}
+
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold.woff2') format('woff2'),
+    	url('../fonts/Roboto-Bold.woff') format('woff'),
+    	url('../fonts/Roboto-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+@font-face
+{
+    font-family: 'Source Sans Pro';
+    src: url('../fonts/SourceSansPro-Regular.woff2') format('woff2'),
+    	url('../fonts/SourceSansPro-Regular.woff') format('woff'),
+    	url("../fonts/SourceSansPro-Regular.otf") format('opentype');
+    font-weight: normal;
+}
+
+@font-face
+{
+    font-family: 'Source Sans Pro';
+    src: url('../fonts/SourceSansPro-Bold.woff2') format('woff2'),
+    	url('../fonts/SourceSansPro-Bold.woff') format('woff'),
+    	url('../fonts/SourceSansPro-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+header, nav, section, article, aside, footer
+{
+   display: block;
+}
+
+{
+	box-sizing: border-box;
+}
+
+{
+	font-weight: bold;
+}
+
+{
+	font-style: italic;
+}
+
+body
+{
+	background-color: #212121;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+/*	-webkit-user-select: none;
+	-moz-user-select: -moz-none;
+	-ms-user-select: none;
+	user-select: none;*/
+}
+
+body a:link
+{
+	color: white;
+	text-decoration: none;
+}
+
+body a:visited
+{
+	color: white;
+	text-decoration: none;
+}
+
+body a:active
+{
+	color: white;
+}
+
+body a:hover
+{
+	color: white;
+	text-decoration: none;
+}
+
+strong
+{
+	font-weight: bold;
+}
+
+.container
+{
+	width: 100%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+/*	overflow: hidden;*/
+	font-size: 20px;
+	color: black;
+}
+
+.chatContainer
+{
+	width: 400px;
+	height: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 20px;
+	color: black;
+}
+
+.homeTopBar
+{
+	width: 100%;
+	height: 10px;
+	background-color: #DA291C;
+	margin-bottom: 10px;
+}
+
+.homeBackground
+{
+	background-image: url('../images/home_background_2.png');
+}
+
+.homeNameAndPower
+{
+	text-align: right;
+	padding-right: 10px;
+}
+
+.homeName
+{
+	font-family: Roboto;
+	font-size: 15.71px;
+	color: white;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.homePower
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 33px;
+}
+
+.homeLogo
+{
+	position: relative;
+	padding-top: 40px;
+	padding-bottom: 100px;
+	right: 68px;
+	text-align: center;
+}
+
+.indexTitle
+{
+	position: relative;
+	bottom: 275px;
+	right: -40px;	
+	padding-bottom: -5px;
+	text-align: center;
+}
+
+.nonIndexTitle
+{
+	position: relative;
+	bottom: 25px;
+	right: 350px;	
+	text-align: center;
+}
+
+.nonHomeLogo
+{
+	position: relative;
+	top: 50px;
+	right: 575px;
+	text-align: center;
+	z-index: 50;
+}
+
+.homeMenu
+{
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.homeMenuElement
+{
+	display: inline-block;
+	margin-left: 30px;
+	margin-right: 30px;
+	vertical-align: middle;
+}
+
+.homeMenuElement:first-child
+{
+	margin-left: 0px;
+}
+
+.homeMenuElement:last-child
+{
+	margin-right: 0px;
+}
+
+.homeMenuElementButton
+{
+	display: inline-block;
+	text-align: center;
+	width: 225px;
+	height: 150px;
+	border: solid 1px #777777;
+	border-radius: 10px;
+	background-image: linear-gradient(#5E5E5E, #303030);
+	box-shadow: 1px 4px 4px black;
+}
+
+.homeMenuElementIcon
+{
+	margin-top: 30px;
+	height: 65px;
+	width: 225px;
+	text-align: center;
+	margin-bottom: 14px;
+}
+
+.homeMenuElementIconHelper
+{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.homeMenuElementIcon img
+{
+    vertical-align: middle;
+    max-height: 65px;
+    max-width: 65px;
+}
+
+.homeMenuElementText
+{
+	font-size: 23.56px;
+}
+
+header
+{
+	width: 100%;
+	height: 70px;
+	border-bottom: solid 1px #DA291C;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	background-color: #212121;
+	margin-bottom: 10px;
+}
+
+.headerLogo
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 18px;
+}
+
+.headerMenu
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.headerMenuElement
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.headerMenuElementButton
+{
+	display: inline-block;
+	width: 156px;
+	height: 50px;
+	border-radius: 4px;
+	background-color: #303030;
+	box-shadow: 0px 1px 3px black;
+}
+
+.headerMenuElementIconHelper
+{
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.headerMenuElementIcon
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+
+.headerMenuElementIcon img
+{
+    vertical-align: middle;
+    max-height: 50px;
+    max-width: 36px;
+}
+
+.headerMenuElementText
+{
+	display: inline-block;
+	vertical-align: middle;
+    max-height: 50px;
+    max-width: 100px;
+    font-size: 19.64px;
+}
+
+.headerNameAndPower
+{
+	margin-top: 10px;
+	float: right;
+}
+
+.headerName
+{
+	font-family: Roboto;
+	font-size: 15.71px;
+	color: white;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.headerPower
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 22px;
+}
+
+.mainBackground
+{
+	background-image: url('../images/background.png');
+}
+
+.informationIconImage
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.infoIcon
+{
+	width: 20px;
+	height: auto;
+}
+
+.button
+{
+	background-color: #424242;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	font-family: Roboto;
+	font-size: 13.75px;
+	letter-spacing: 1.25px;
+	color: white;
+	border-radius: 4px;
+	box-shadow: 0px 1px 3px black;
+	border: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.button-small
+{
+	width: 129px;
+}
+
+.button-active
+{
+	background-color: #D32F2F;
+}
+
+
+.button:focus
+{
+    outline: none !important;
+}
+
+
+
+.relativeContainer
+{
+	position: relative;
+}
+
+
+.generalInfoTitle
+{
+	position: relative;
+	font-family: Roboto;
+	font-size: 28px;
+	color: black;
+}
+
+.chatTitle
+{
+    position:relative;
+    font-family: Roboto;
+    font-size: 22px;
+    color: black;
+}
+
+.faqTitle
+{
+	position: relative;
+	font-family: Roboto;
+	font-size: 32px;
+	color: black;
+}
+
+.generalInfoSubtitle
+{
+	padding-top: 29px;
+	font-family: Roboto;
+	font-size: 19.64px;
+	color: black;
+}
+
+.generalInfoSubtitleHeading
+{
+	padding-top: 29px;
+	padding-left: 200px;
+	font-family: Roboto;
+	font-size: 26px;
+	color: black;
+}
+
+.generalInfoInfo
+{
+	padding-top: 29px;
+	padding-left: 250px;
+	font-family: Roboto;
+	font-size: 18px;
+	color: black;
+	line-height: 1.3;
+}
+
+.resumeImage
+{
+	padding-top: 29px;
+	padding-left: 300px;
+}
+
+
+.advancedSettingsLabel
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 160px;
+	text-align: right;
+	font-family: 'Source Sans Pro';
+	font-size: 16px;
+	color: #CECECE;
+	letter-spacing: 0.5px;
+	margin-right: 16px;
+}
+
+.advancedSettingsLabel.valign-top
+{
+	vertical-align: top;
+}
+
+.advancedSettingsLabel.valign-bottom
+{
+	vertical-align: bottom;
+	padding-bottom: 8px;
+}
+
+.advancedSettingsRadioList
+{
+	display: inline-block;
+	vertical-align: top;
+	font-size: 0;
+	width: 40%;
+}
+
+.advancedSettingsRadioListElement
+{
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.advancedSettingsRadioListElement:first-child
+{
+	padding-top: 0px;
+}
+
+.advancedSettingsRadioListElement:last-child
+{
+	padding-bottom: 0px;
+}
+
+.advancedSettingsRadio
+{
+}
+
+.advancedSettingsRadioInput
+{
+	cursor: pointer;
+}
+
+.advancedSettingsRadioLabel
+{
+	font-family: Roboto;
+	font-size: 15.71px;
+	color: #FFFFFF;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+	padding-top: 2px;
+}
+
+.advancedSettingsInlineContainer
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.advancedSettingsInlineContainer:first-child
+{
+	margin-left: 0px;
+}
+
+.advancedSettingsInlineContainer:last-child
+{
+	margin-right: 0px;
+}
+
+.advancedSettingsInlineContainer.valign-bottom
+{
+	vertical-align: bottom;
+}
+
+.advancedSettingsInlineFieldSubLabel
+{
+	font-family: Roboto;
+	font-size: 11.78px;
+	color: #FFFFFF;
+	letter-spacing: 0.4px;
+	text-align: center;
+	margin-bottom: 6px;
+}
+
+.advancedSettingsInlineField
+{
+}
+
+.advancedSettingsInlineTextField
+{
+	display: inline-block;
+	vertical-align: middle;
+	background-color: #303030;
+	border-radius: 4px;
+	font-family: 'Source Sans Pro';
+	font-size: 14px;
+	color: #CECECE;
+	border: none;
+	width: 86px;
+	height: 30px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.advancedSettingsInlineSeparator
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 25px;
+}
+
+.advancedSettingsInlineSeparator.large
+{
+	width: 120px;
+}
+
+.advancedSettingsInlineSeparator.short
+{
+	width: 5px;
+}
+
+.advancedSettingsSwitchLabel
+{
+	display: inline-block;
+	vertical-align: middle;
+	font-family: 'Source Sans Pro';
+	font-size: 16px;
+	color: #CECECE;
+	letter-spacing: 0.5px;
+}
+
+.scheduleEditorEditPassesContainer
+{
+	width: 668px;
+	height: 621px;
+	background-color: #7B7B7B;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.scheduleEditorEditPassesTitle
+{
+	width: 100%;
+	height: 40px;
+	padding-top: 8px;
+	padding-left: 15px;
+	background-color: rgba(206, 206, 206, 0.4);
+	font-family: Roboto;
+	font-size: 23.56px;
+	color: white;
+}
+
+.scheduleEditorEditPassesButtonBar
+{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 56px;
+	background-color: #303030;
+	padding-top: 10px;
+	padding-left: 9px;
+	padding-right: 11px;
+}
+
+.scheduleEditorEditPassesButtonRight
+{
+	float: right;
+	display: inline-block;
+	vertical-align: middle;
+	width: 106px;
+	height: 36px;
+	background-color: transparent;
+	border-radius: 4px;
+	font-family: Roboto;
+	font-size: 13.75px;
+	color: #D32F2F;
+	letter-spacing: 1.25px;
+	line-height: 36px;
+	text-align: center;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.editPassesButtonList
+{
+	position: absolute;
+	bottom: 72px;
+	width: 100%;
+	text-align: center;
+	font-size: 0;
+}
+
+.editPassesButtonListElement
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 121px;
+	height: 40px;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-family: Roboto;
+	font-size: 13.75px;
+	color: #FFFFFF;
+	letter-spacing: 1.25px;
+	text-align: center;
+	line-height: 40px;
+	background-color: #424242;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.editPassesButtonListElement:first-child
+{
+	margin-left: 0px;
+}
+
+.editPassesButtonListElement:last-child
+{
+	margin-right: 0px;
+}
+
+.editPassesTableHeader
+{
+	padding-top: 25px;
+	padding-left: 60px;
+	height: 52px;
+	font-family: Roboto;
+	font-size: 13.75px;
+	color: rgba(255, 255, 255, 0.6);
+	letter-spacing: 0.25px;
+	border-bottom: solid 1px rgba(255,255,255,0.12);
+}
+
+.editPassesTableHeaderItem
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 72px;
+}
+
+.editPassesPassListContainer
+{
+	width: 645px;
+	height: 350px;
+	overflow: auto;
+}
+
+.editPassesPassList
+{
+}
+
+.editPassesPassListElement
+{
+	display: block;
+	font-family: Roboto;
+	font-size: 13.75px;
+	color: #FFFFFF;
+	letter-spacing: 0.25px;
+	height: 60px;
+	border-bottom: solid 1px rgba(255,255,255,0.12);
+}
+
+.editPassesPassListElement:last-child
+{
+	border-bottom: none;
+}
+
+.editPassesPassListElement.active
+{
+	background-color: #D32F2F;
+}
+
+.passListRowNumber
+{
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 60px;
+	padding-left: 9px;
+	width: 60px;
+	cursor: pointer;
+}
+
+.passListName
+{
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 60px;
+	width: 146px;
+	cursor: pointer;
+}
+
+.passListNumOfLevels
+{
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 60px;
+	width: 80px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.passListSeparator
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 250px;
+	height: 60px;
+	cursor: pointer;
+}
+
+.passListDeleteIcon
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+.passListDeleteIconImage
+{
+	cursor: pointer;
+}
+
+.dialogBackground
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.4);
+	z-index: 49;
+}
+
+.animationFadeIn
+{
+	animation: fadeIn 0.3s ease-in;
+}
+
+.animationFadeOut
+{
+	animation: fadeOut 0.3s ease-in;
+}
+
+@keyframes fadeIn
+{
+	from
+	{ 
+		opacity: 0;
+	}
+	to
+	{
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut
+{
+	from
+	{ 
+		opacity: 1;
+	}
+	to
+	{
+		opacity: 0;
+	}
+}
+
+.dialogContainer
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 49;
+}
+
+.dialogBox
+{
+	position: absolute;
+	left: 413px;
+	top: 303px;
+	width: 540px;
+	height: 177px;
+	background-color: #424242;
+	box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding-top: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+
+.dialogBox.keyboard
+{
+	top: 183px;
+}
+
+.dialogBoxTitle
+{
+	font-family: Roboto;
+	font-size: 19.64px;
+	color: #FFFFFF;
+	letter-spacing: 0.25px;
+	padding-bottom: 12px;
+}
+
+.dialogBoxField
+{
+	padding-bottom: 30px;
+}
+
+.dialogBoxTextField
+{
+	background-color: #303030;
+	border-radius: 4px;
+	font-family: 'Roboto';
+	font-size: 15.71px;
+	color: #CECECE;
+	border: none;
+	width: 300px;
+	height: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.dialogBoxTextField:focus
+{
+    outline: none !important;
+}
+
+.dialogBoxBottomButtons
+{
+	text-align: right;
+}
+
+.dialogBoxBottomButton
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 80px;
+	height: 36px;
+	text-align: center;
+	line-height: 36px;
+	margin-left: 8px;
+	margin-right: 7px;
+	font-family: Roboto;
+	font-size: 12px;
+	color: white;
+	letter-spacing: 1.25px;
+	cursor: pointer;
+}
+
+.dialogBoxBottomButton:last-child
+{
+	margin-right: 0px;
+}
+
+
+
+.systemDialog
+{
+	background: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 1366px;
+	height: 768px;
+	text-align: center;
+	z-index: 50;
+}
+
+.systemDialog.login
+{
+	z-index: 48;
+}
+
+.systemDialogContainer
+{
+	margin-top: 274px;
+	margin-left: 481px;
+	width: 404px;
+	height: 220px;
+}
+
+.systemDialogContainer.large
+{
+	margin-top: 236px;
+	margin-left: 381px;
+	width: 604px;
+	height: 295px;
+}
+
+.systemDialogContainer.medium
+{
+	margin-top: 236px;
+	margin-left: 460px;
+	width: 447px;
+	height: 295px;
+}
+
+.systemDialogTitleBar
+{
+	width: 92.5%;
+	height: 56px;
+	border-radius: 15px 15px 0px 0px;
+	background-color: #606060;
+	text-align: left;
+	padding-left: 29px;
+	padding-top: 7px;
+}
+
+.systemDialogIcon
+{
+	display: inline-block;
+	vertical-align: middle;
+	width: 49px;
+	height: 44px;
+	margin-right: 45px;
+}
+
+.systemDialogTitle
+{
+	display: inline-block;
+	vertical-align: middle;
+	font-family: Roboto;
+	font-size: 19px;
+	color: white;
+	line-height: 44px;
+}
+
+.systemDialogTitle.center
+{
+	display: block;
+	text-align: center;
+	margin-left: -29px;
+}
+
+.systemDialogBody
+{
+	width: 100%;
+	border-radius: 0px 0px 15px 15px;
+	background-color: #303030;
+	text-align: center;
+}
+
+.systemDialogMessage
+{
+	width: 310px;
+	font-family: Roboto;
+	font-size: 18px;
+	line-height: 22px;
+	color: white;
+	padding-top: 35px;
+	padding-bottom: 35px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.systemDialogMessage.grey
+{
+	color: #aaaaaa;
+}
+
+.systemDialogContainer.large .systemDialogMessage
+{
+	width: 500px;
+	padding-top: 31px;
+	padding-bottom: 26px;
+	letter-spacing: 0.6px;
+}
+
+.systemDialogButtons
+{
+	padding-bottom: 28px;
+}
+
+.systemDialogButton
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 9px;
+	margin-right: 9px;
+	width: 104px;
+	height: 36px;
+	border-radius: 4px;
+	line-height: 36px;
+	font-family: Roboto;
+	font-size: 20px;
+	color: white;
+	cursor: pointer;
+	background-color: #606060;
+}
+
+.systemDialogContainer.large .systemDialogButton
+{
+	width: 146px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.systemDialogButton.red
+{
+	background-color: #D82B26;
+}
+
+.systemDialogButton.green
+{
+	background-color: #1CBA52;
+}
+
+.inputField
+{
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	width: 250px;
+	height: 30px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.submitButton
+{
+	font-family: Roboto;
+	font-size: 14.75px;
+	color: #eeeeee;
+	letter-spacing: 1.25px;
+	width: 174px;
+	height: 40px;
+	line-height: 35px;
+	text-align: center;
+	border-radius: 6px;
+	background-color: #424242;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+.hidden
+{
+	display: none;
+}
+
+.lockScreen
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 1366px;
+	height: 768px;
+	background-color: rgba(255, 255, 255, 0.4);
+	z-index: 90;
+}

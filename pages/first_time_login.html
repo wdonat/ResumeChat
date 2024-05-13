@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Resume Chat</title>
+
+<meta name="Author" content="Wolfram Donat" />
+<meta name="copyright" content="2024 Wolfram Donat" />
+<meta name="date" content="2024-02-01" />
+<meta name="Description" lang="us" content="" />
+<meta name="Keywords" content="" />
+<meta name="Robots" content="Index, All" />
+<meta charset="UTF-8">
+<!-- <meta name="viewport" content="width=1366"> -->
+
+<link rel="shortcut icon" type="image/png" href="static/images/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="static/styles/styles.css" />
+
+<script src="static/scripts/server-communication.js"></script>
+<script src="static/scripts/system-dialog.js"></script>
+<script src="static/scripts/auth.js"></script>
+
+<script>
+
+	document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+	function signUp()
+	{
+		window.location.href = "signup.html";
+	}
+
+	function examples()
+	{
+		window.location.href = "examples.html";
+	}
+
+	function faq()
+	{
+		window.location.href = "faq.html";
+	}
+
+	function clickedOnLoginButton()
+	{
+		let email = document.getElementById("txtEmail").value;
+		let username = document.getElementById("txtUsername").value;
+		let password = document.getElementById("txtPassword").value;
+		
+		if(username == "")
+		{
+			alert("Please enter a username");
+			return;
+		}
+		else if(password == "")
+		{
+			alert("Please enter a password");
+			return;
+		}
+		else if(email == "")
+		{
+			alert("Please enter a valid email address");
+			return;
+		}
+
+		command = "createLogin";
+		postToServer(command, { email: email, username: username, password: password }, processCreateLoginResponse);
+	}
+
+	function processCreateLoginResponse(response)
+	{
+		if(response.responseCode == "1")
+		{
+			const baseURL = "";
+			window.location.href = baseURL + "editInfo.html?id=" + response.data;
+		}
+		else
+		{
+			alert(response.responseMessage);
+			return;
+		}
+	}
+
+	function clickedOnCancelButton()
+	{
+		document.getElementById("signupForm").reset();
+	}
+
+</script>
+
+</head>
+<body>
+
+	<div id="divMainContainer" class="container homeBackground relativeContainer"> 
+		<a href="index.html">
+			<div class="homeLogo">
+				<img src="static/images/index_logo_title.png">
+			</div>
+		</a>
+ 		<div class="faqTitle">
+ 			<center>Thank you for creating an account - Let's get started!</center><br>
+ 			<center>Create your login info here:<br><br></center>
+ 		</div>
+ 		<form id="signupForm">
+ 			<center><input id="txtEmail" placeholder="Email" value=""></center><br>
+ 			<center><input id="txtUsername" placeholder="Username" value=""></center><br>
+ 			<center><input id="txtPassword" placeholder="Password" value=""></center><br><br>
+ 		</form>
+
+ 		<center>
+ 			<div class="systemDialogButton green" onClick="clickedOnLoginButton();">LOGIN</div>
+ 			<div class="systemDialogButton red" onClick="clickedOnCancelButton();">CANCEL</div><br><br>
+ 		</center>
+
+<!--  	<ul class="homeMenu">
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: signUp();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/signup.png">
+    			</div>
+    			<div class="homeMenuElementText">SIGN UP</div>
+ 			</a>
+ 		</li>
+
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: examples();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/examples.png">
+ 				</div>
+ 				<div class="homeMenuElementText">EXAMPLES</div>
+ 			</a>
+ 		</li>
+ 		<li class="homeMenuElement">
+ 			<a href="javascript: faq();" class="homeMenuElementButton">
+ 				<div class="homeMenuElementIcon">
+ 					<span class="homeMenuElementIconHelper"></span>
+ 					<img src="static/images/faq.png">
+ 				</div>
+ 				<div class="homeMenuElementText">FAQ</div>
+ 			</a>
+ 		</li>
+ 	</ul> -->
+ 	<br><br><br><br>
+
+	</div>
+
+	<script>
+		initSystemDialog("divMainContainer");
+	</script>
+
+</body>
+</html>
