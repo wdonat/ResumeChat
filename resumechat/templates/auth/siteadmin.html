@@ -1,0 +1,37 @@
+{% extends 'authbase.html' %}
+
+{% block title %}SITE ADMIN{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="registerLoginHeading">
+        <h1>Add user</h1>
+    </div>
+    <form class="loginForm" method="post" id="addUser">
+        <input type="hidden" name="form_type" value="add_user">
+        <label for="fullName">Full Name</label><br>
+        <input class="inputField" name="fullName" id="fullName"><br><br>
+
+        <label for="email">Email Address</label><br>
+        <input class="inputField" name="email" id="email"><br><br>
+
+        <label for="username">Username</label><br>
+        <input class="inputField" name="addUsername" id="addUsername"><br><br>
+
+        <label for="password">Password</label><br>
+        <input class="inputField" type="password" name="password" id="password"><br><br>
+        <br><br>
+        <input class="submitButton" type="submit" value="ADD">
+    </form>
+
+    <br><br><br>
+    <form class="loginForm" method="post" id="removeUser">
+        <input type="hidden" name="form_type" value="remove_user">
+        <label for="username">Username</label><br>
+        <input class="inputField" name="remUsername" id="remUsername"><br><br>
+        <input class="submitButton" type="submit" value="REMOVE">
+    </form>
+{% endblock %}

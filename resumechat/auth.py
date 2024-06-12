@@ -2,7 +2,7 @@ import functools
 import random
 
 
-from flask import Blueprint, flash, g, redirect
+from flask import Blueprint, flash, g, redirect, jsonify
 from flask import render_template, request, session, url_for
 
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -20,6 +20,26 @@ def createLink():
         nextchar = alphabet[random.randint(0, 62)]
         link += nextchar
     return link
+
+def addUser(f_name, e_address, u_name, pword):
+    link = createLink()
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('INSERT INTO USER (name, email, username, password, link_id, subscr_status) VALUES (?, ?, ?, ?, ?, ?)',
+                   (f_name, e_address, u_name, generate_password_hash(pword), link, 1),)
+    db.commit()
+    return cursor.lastrowid
+
+def removeUser(u_name):
+    db = get_db()
+    error = ''
+    try:
+        db.execute('DELETE FROM USER WHERE username = ?', (u_name,))
+        db.commit()
+        return 'Success'
+    except Error as e:
+        error = str(e)
+    return error
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -143,6 +163,26 @@ def account():
     db = get_db()
     user = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
     return render_template('auth/account.html', emailAddress=user['email'], username=user['username'])
+
+@bp.route('/siteadmin', methods=['GET', 'POST'])
+def siteadmin():
+    if session['user_id'] != 1:
+        return redirect(url_for('application.index'))
+        
+    if request.method == 'POST':
+        form_type = request.form.get('form_type')
+        if form_type == 'add_user':
+            result = addUser(request.form.get('fullName'), 
+                             request.form.get('email'), 
+                             request.form.get('addUsername'), 
+                             request.form.get('password'))
+            return jsonify(result)
+
+        elif form_type == 'remove_user':
+            result = removeUser(request.form.get('remUsername'))
+            return jsonify(result)
+
+    return render_template('auth/siteadmin.html')
 
 
 @bp.before_app_request

@@ -34,10 +34,22 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, SentenceTran
 character_splitter = RecursiveCharacterTextSplitter(separators=['\n\n', '\n', '. ', ' ', ''], chunk_size=1000, chunk_overlap=0)
 token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
 
+load_dotenv()
+
+OA.api_key = os.getenv('OPENAI_API_KEY')
+client = OA.OpenAI()
+openai_client = OpenAI()
+
 UPLOAD_FOLDER = 'resumes'
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
 bp = Blueprint('application', __name__)
+
+# def initializeEmptyCollection():
+#     global chroma_collection
+#     embedding_function = SentenceTransformerEmbeddingFunction()
+#     chroma_client = chromadb.Client()
+
 
 def getChatWindowUserInfo(ident):
     # ident is the link_id
@@ -49,27 +61,21 @@ def getChatWindowUserInfo(ident):
     try:
         db = get_db()
         user = db.execute('SELECT * FROM USER WHERE link_id = ?', (link_id,)).fetchone()
-        user_name = user['name']
-        print('53 ', user_name)
+        name = user['name']
         user_info = user['total_info']
         user_info = json.loads(user_info)  # Convert saved JSON back into list
 
         embedding_function = SentenceTransformerEmbeddingFunction()
         chroma_client = chromadb.Client()
-        coll_name = user_name.replace(' ', '').lower()
+        coll_name = name.replace(' ', '').lower()
         chroma_collection = chroma_client.create_collection(coll_name, embedding_function=embedding_function)
         ids = [str(i) for i in range(len(user_info))]
-
-        chroma_collection.add(ids=ids, documents=user_info[1])
-        print('70')
+        chroma_collection.add(ids=ids, documents=user_info)
         c_list = chromadb.Client().list_collections()
-        print('67')
-        print(c_list)
-        print('69 ', user_name)
     except:
-        user_name = ''
-    print(user_name)
-    return user_name
+        name = ''
+
+    return name
 
 def sendChatMessage(msg: str):
     global chroma_collection
@@ -77,6 +83,13 @@ def sendChatMessage(msg: str):
     documents = results['documents'][0]
     output = rag(msg, documents)
     return output
+
+def deleteChatInfo():
+    global chroma_collection
+    coll_list = chromadb.Client().list_collections()
+    for c in coll_list:
+        chromadb.Client().delete_collection(c.name)
+    return
 
 def createCustomer(cust):
     # cust['email']
@@ -118,7 +131,7 @@ def chunkSeparator(text_file):
     print(character_split_texts[:-1])
     print(f'\nTotal chunks: {len(character_split_texts)}')
 
-def rag(query, retrieved_documents, model='gpt-4-turbo-2024-04-09', temperature=0.3):
+def rag(query, retrieved_documents, model='gpt-4o', temperature=0.3):
     information = "\n\n".join(retrieved_documents)
     messages = [{"role": "system", 
                  "content": "You are a helpful and friendly personal assistant. \
@@ -273,6 +286,33 @@ def convertUploadedFile(file, file_name, uid):
         with open('total_info.txt', 'w') as f:
             f.write(personal_info)
 
+        # # Pull any existing info out of total_info
+        # db = get_db()
+        # info_result = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
+        
+        # if info_result['total_info'] == '' or info_result['total_info'] is None:
+        #     # There's nothing in it, so just save the resume info into total_info
+        #     with open('resume_text.txt', 'r') as f:
+        #         tmp_info = f.readlines()
+        #         db.execute('UPDATE USER SET total_info = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
+        #         db.commit()
+
+        # else:
+        #     tmp_info = json.loads(info_result['total_info'])
+        #     with open('tmp_info.txt', 'w') as f:
+        #         for line in tmp_info:
+        #             f.wr
+
+        #     with open('total_info.txt', 'a') as f:
+
+
+
+
+
+        # if 'My full name is' in total_info[-1]:
+        #     # 
+        #     print(sd)
+
         print('PDF resume information written to file')
 
         # Clean up after ourselves
@@ -331,6 +371,7 @@ def editInfo():
     db = get_db()
     response = {'status': 'Error', 'message': 'Something went wrong'}
     user_id = session['user_id']
+    print(user_id)
 
     if request.method == 'POST':
         # print(request.form)
@@ -341,7 +382,7 @@ def editInfo():
 
         onsite_interest = request.form.get('onsiteInterest')
         hybrid_interest = request.form.get('hybridInterest')
-        remote_interest = request.form.get('remoteInterestYes')
+        remote_interest = request.form.get('remoteInterest')
         
         fulltime_work = request.form.get('fulltimeWork')
         parttime_work = request.form.get('parttimeWork')
@@ -354,7 +395,7 @@ def editInfo():
         # 1 = 'actively looking', 2 = 'interested', 3 = 'just seeing what is available'
         search_status = request.form.get('searchStatus')
 
-        # 1 = 'two weeks notice', 2 = 'immediately'
+        # 0 = 'two weeks notice', 1 = 'immediately'
         start_time = request.form.get('startTime')
 
         current_projects = request.form.get('currentProjects')
@@ -362,8 +403,6 @@ def editInfo():
 
         job_skills = request.form.get('jobSkills')
         job_roles = request.form.get('jobRoles')
-
-        print(start_time)
 
         try:
             # user = db.execute('SELECT * FROM USER WHERE id = ?', (user_id,)).fetchone()
@@ -395,19 +434,21 @@ def editInfo():
             # append total_info.txt to it, 
             # and then save everything to the db. If the db has no resume info, just save this info to db
             resume_result = db.execute('SELECT * FROM USER WHERE id = ?', (user_id,)).fetchone()
-            if resume_result['resume_text'] == '':
+            # print(resume_result['resume_text'])
+            # print(type(resume_result['resume_text']))
+            # print(resume_result['resume_text'][0])
+            if resume_result['resume_text'] == '' or resume_result['resume_text'] is None:
                 # Write total_info.txt to DB
-                tmp_info = []
                 with open('total_info.txt', 'r') as f:
-                    tmp_info.append(f.readlines())
+                    tmp_info = f.readlines()
                     db.execute('UPDATE USER SET total_info = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
                     db.commit()
             else:
-                tmp_info = []
-                tmp_info.append(resume_result['resume_text'])
+                print('line 423')
+                tmp_info = json.loads(resume_result['resume_text'])
                 with open('total_info.txt', 'r') as f:
-                    tmp_info.append(f.readlines())
-                    print(tmp_info)
+                    for line in f.readlines():
+                        tmp_info.append(line)
                     db.execute('UPDATE USER SET total_info = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
                     db.commit()
 
@@ -426,20 +467,33 @@ def editInfo():
     user = db.execute('SELECT * FROM USER WHERE id = ?', (user_id,)).fetchone()
     # on_site/hybrid/travel/relocate = 0/1
     # full_time/part_time/contract = 'on'/'off'
-    f_work = 1 if user['full_time'] == 'on' else 0
-    p_work = 1 if user['part_time'] == 'on' else 0
-    c_work = 1 if user['contract'] == 'on' else 0
+    f_work = '1' if user['full_time'] else '0'
+    p_work = '1' if user['part_time'] else '0'
+    c_work = '1' if user['contract'] else '0'
+
+    if user['past_projects'] == '' or user['past_projects'] is None:
+        past_projects = ''
+    else:
+        past_projects = user['past_projects']
+    if user['curr_projects'] == '' or user['curr_projects'] is None:
+        current_projects = ''
+    else:
+        current_projects = user['curr_projects']
+
+    if user['salary'] == '' or user['salary'] is None:
+        salary_req = ''
+    else:
+        salary_req = user['salary']
 
     return render_template('editinfo.html', user=g.user, link=g.link, 
         fullName=user['name'], emailAddress=user['email'], 
-        phoneNumber=user['phone'], salaryRequirement=user['salary'],
-        onsiteInterest=user['on_site'], hybridInterest=user['hybrid'], 
-        remoteInterest=user['remote'], fulltimeWork=f_work,# fulltimeWork=user['full_time'], 
+        phoneNumber=user['phone'], salaryRequirement=salary_req,
+        onsiteInterest=str(user['on_site']), hybridInterest=str(user['hybrid']), 
+        remoteInterest=str(user['remote']), fulltimeWork=f_work,
         parttimeWork=p_work, contractWork=c_work,
-        # partimeWork=user['part_time'], contractWork=user['contract'],
-        travelWork=user['travel'], relocateWork=user['relocate'], 
-        searchStatus=user['job_search_status'], startTime=user['notice_time'], 
-        currentProjects=user['curr_projects'], pastProjects=user['past_projects'], 
+        travelWork=str(user['travel']), relocateWork=str(user['relocate']), 
+        searchStatus=str(user['job_search_status']), startTime=str(user['notice_time']), 
+        currentProjects=current_projects, pastProjects=past_projects, 
         jobSkills=user['skills'], jobRoles=user['roles'])
 
 @bp.route('/examples')
@@ -456,6 +510,7 @@ def signup():
 
 @bp.route('/uploadresume', methods=['GET', 'POST'])
 def upload_resume():
+    # After uploading a resume, need to "insert it" into total_info (prepending previous info)
     response = {'status': 'Error', 'message': 'Something went wrong'}
     if request.method == 'POST':
         upload = request.files
@@ -491,6 +546,7 @@ def resumeUploaded():
 
 @bp.route('/chat', methods=['GET', 'POST'])
 def chat():
+    global chroma_collection
     if request.method == 'POST':
         data = request.get_json()
         user_message = data.get('message')
@@ -499,7 +555,8 @@ def chat():
 
         # db = get_db()
         # user = db.execute('SELECT * FROM USER WHERE link_id = ?', (link_id,)).fetchone()
-        response = getChatWindowUserInfo(link_id)
+        getChatWindowUserInfo(link_id)
+        response = sendChatMessage(user_message)
         print(response)
         return jsonify({'response': response})
     else:
@@ -514,11 +571,7 @@ def close_chat():
     unique_id = data.get('id')
 
     # Do close-chat stuff here
-    global chroma_collection
-    coll_list = chromadb.Client().list_collections()
-    for c in coll_list:
-        chromadb.Client().delete_collection(c.name)
-
+    deleteChatInfo()
     return jsonify({'message': 'Chat closed successfully'})
 
 @bp.route('/webhook', methods=['POST'])
