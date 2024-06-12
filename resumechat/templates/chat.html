@@ -1,0 +1,95 @@
+{% extends 'chatbase.html' %}
+
+{% block title %}CHAT{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+    <div class="faqTitle">
+        <center>Chat<br><br></center>
+    </div>
+
+    <form id="divChatForm">
+        <!-- <center><div id="chatTitle" class="chatTitle">Please wait... Loading info...</div></center> -->
+        <center><div id="chatTitle" class="chatTitle">Chat with {{ name }}'s AI assistant</div></center>
+        <br><br>
+        <input type="hidden" id="link-id" value="{{ link_id }}">
+        <div id="divChatWindow">
+            <center>
+                <textarea id="chatForm" placeholder="You can ask about salary requirements, relocation preferences, where they are in the job search, or even about past or current projects" name="msg" rows="24" cols="40" required></textarea>
+            </center>
+        </div>
+        <br>
+        <center>
+            <button type="submit" class="submitButton" id="sendButton">SEND</button>
+            <button type="button" class="submitButton" id="closeButton">CLOSE</button>
+        </center>
+        
+    </form>
+
+{% endblock %}
+{% block scripts %}
+<script>
+    // Event listener for the SEND button
+    document.getElementById("divChatForm").addEventListener("submit", function(event)
+    {
+        event.preventDefault();
+        const userInput = document.getElementById("chatForm").value;
+        const uniqueId = document.getElementById("link-id").value;
+
+        var chat = document.getElementById("chatForm").value;
+        var chatArray = chat.split('\n\n');
+        var lastQuestion = "";
+        if(chatArray.length > 1)
+            lastQuestion = chatArray[chatArray.length - 1];
+        else
+            lastQuestion = chatArray[0];
+
+        fetch('/chat', 
+        {
+            method: 'POST',
+            headers: 
+            {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({message: lastQuestion, id: uniqueId}),
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            var prevContent = document.getElementById("chatForm").value + "\n\n";
+            var contentArray = prevContent.split("\n\n");
+
+            htmlContent = "<center><textarea id='chatForm' name='msg' rows='24' cols='40' required>" + prevContent + "AI: " + data.response + "\n\n" + "</textarea></center>"
+            document.getElementById("divChatWindow").innerHTML = htmlContent;
+
+        })
+        .catch(error=>console.error('Error:', error));
+    });
+
+    // Event listener for the CLOSE button
+    document.getElementById("closeButton").addEventListener("click", function(event)
+    {
+        const uniqueId = document.getElementById("link-id").value;
+        fetch('/close-chat',
+        {
+            method: 'POST',
+            headers: 
+            {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: uniqueId}),
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            console.log('Chat closed', data.message);
+            htmlContent = "<center><textarea id='chatForm' name='msg' rows='24' cols='40' required>Chat completed - you may close the window</textarea></center>"
+            document.getElementById("divChatWindow").innerHTML = htmlContent;
+            document.getElementById("sendButton").classList.add("hidden");
+            document.getElementById("closeButton").classList.add("hidden");
+        })
+        .catch(error=>console.error('Error: ', error));
+    });
+
+</script>
+{% endblock %}

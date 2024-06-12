@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS USER;
+
+CREATE TABLE USER (
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    customer_id TEXT,
+                    name TEXT,
+                    email TEXT,
+                    phone TEXT,
+                    salary TEXT,
+                    username TEXT,
+                    password TEXT,
+                    link_id TEXT,
+                    subscr_status INTEGER,
+                    on_site BOOL,
+                    hybrid BOOL,
+                    remote BOOL,
+                    full_time BOOL,
+                    part_time BOOL,
+                    contract BOOL,
+                    travel BOOL,
+                    relocate BOOL,
+                    job_search_status INTEGER,
+                    notice_time TEXT,
+                    curr_projects TEXT,
+                    past_projects TEXT,
+                    skills TEXT,
+                    roles TEXT,
+                    resume_text TEXT,
+                    total_info TEXT
+                );

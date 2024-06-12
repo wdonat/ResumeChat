@@ -1,0 +1,28 @@
+{% extends 'authbase.html' %}
+
+{% block title %}REGISTER{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="registerLoginHeading">
+        <h1>Thank you for signing up! Now, create your account...</h1>
+    </div>
+    <form class="loginForm" method="post">
+        <label for="fullName">Full Name</label><br>
+        <input class="inputField" name="fullName" id="fullName" value="{{ fullName }}"><br><br>
+
+        <label for="email">Email Address</label><br>
+        <input class="inputField" name="email" id="email" value="{{ emailAddress }}" required><br><br>
+
+        <label for="username">Username</label><br>
+        <input class="inputField" name="username" id="username" required><br><br>
+
+        <label for="password">Password</label><br>
+        <input class="inputField" type="password" name="password" id="password" required><br><br>
+        <br><br>
+        <input class="submitButton" type="submit" value="Register">
+    </form>
+{% endblock %}

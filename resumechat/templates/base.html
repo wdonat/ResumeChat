@@ -1,0 +1,106 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<nav>
+    <a href="{{ url_for('.index') }}">
+        <img src="{{ url_for('static', filename='images/index_logo_title.png') }}">
+    </a>
+</nav>
+
+<section class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+
+
+    <ul class="homeMenu">
+
+        {% if g.user %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('application.editInfo') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/signup.png') }}">
+                </div>
+                <div class="homeMenuElementText">EDIT INFO</div>
+            </a>
+        </li>
+        {% else %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('.signup') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/signup.png') }}">
+                </div>
+                <div class="homeMenuElementText">SIGN UP</div>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if g.user %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('auth.account') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/home_admin.png') }}">
+                </div>
+                <div class="homeMenuElementText">ACCOUNT</div>
+            </a>
+        </li>
+
+        {% else %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('auth.login') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/home_admin.png') }}">
+                </div>
+                <div class="homeMenuElementText">LOG IN</div>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if not g.user %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('.examples') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/examples.png') }}">
+                </div>
+                <div class="homeMenuElementText">EXAMPLES</div>
+            </a>
+        </li>
+
+        <li class="homeMenuElement">
+            <a href="{{ url_for('.faq') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/faq.png') }}">
+                </div>
+                <div class="homeMenuElementText">FAQ</div>
+            </a>
+        </li>
+
+        {% else %}
+        <li class="homeMenuElement">
+            <a href="{{ url_for('auth.logout') }}" class="homeMenuElementButton">
+                <div class="homeMenuElementIcon">
+                    <span class="homeMenuElementIconHelper"></span>
+                    <img src="{{ url_for('static', filename='images/faq.png') }}">
+                </div>
+                <div class="homeMenuElementText">LOGOUT</div>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+</section>
+
+{% block scripts %}{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}UPLOAD RESUME{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="registerLoginHeading">
+    <h1>Upload your resume (PDF or DOCX) here:</h1>
+</div>
+<form class="loginForm" method="post" action="/uploadresume" enctype="multipart/form-data">
+    <input type="file" id="myResume" name="filename">
+    <button class="submitButton" type="submit">UPLOAD</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

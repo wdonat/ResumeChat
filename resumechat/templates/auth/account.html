@@ -1,0 +1,24 @@
+{% extends 'authbase.html' %}
+
+{% block title %}ACCOUNT{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="registerLoginHeading">
+        <h1>Make any necessary changes to your account info here.</h1>
+        <h1>Leave the password field blank to leave your password unchanged.</h1>
+    </div>
+    <form class="loginForm" method="post">
+        <label for="email">Email Address</label><br>
+        <input class="inputField" name="email" id="email" value="{{ emailAddress }}" required><br><br>
+        <label for="username">Username</label><br>
+        <input class="inputField" name="username" id="username" value="{{ username }}" required><br><br>
+        <label for="password">Password</label><br>
+        <input class="inputField" type="password" name="password" id="password" required><br><br>
+        <br><br>
+        <input class="submitButton" type="submit" value="Save">
+    </form>
+{% endblock %}

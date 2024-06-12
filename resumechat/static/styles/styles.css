@@ -1,0 +1,548 @@
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.woff2') format('woff2'),
+      url('../fonts/Roboto-Regular.woff') format('woff'),
+      url('../fonts/Roboto-Regular.otf') format('opentype');
+    font-weight: normal;
+}
+
+@font-face
+{
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold.woff2') format('woff2'),
+      url('../fonts/Roboto-Bold.woff') format('woff'),
+      url('../fonts/Roboto-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+@font-face
+{
+    font-family: 'Source Sans Pro';
+    src: url('../fonts/SourceSansPro-Regular.woff2') format('woff2'),
+      url('../fonts/SourceSansPro-Regular.woff') format('woff'),
+      url("../fonts/SourceSansPro-Regular.otf") format('opentype');
+    font-weight: normal;
+}
+
+@font-face
+{
+    font-family: 'Source Sans Pro';
+    src: url('../fonts/SourceSansPro-Bold.woff2') format('woff2'),
+      url('../fonts/SourceSansPro-Bold.woff') format('woff'),
+      url('../fonts/SourceSansPro-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+html {
+  font-family: sans-serif;
+  background: #eee;
+  padding: 1rem;
+}
+
+body {
+/*  max-width: 960px;*/
+  max-width: auto;
+  margin: 0 auto;
+  background: lightgray;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: serif;
+  color: #377ba8;
+  margin: 1rem 0;
+}
+
+a {
+  color: #377ba8;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid lightgray;
+}
+
+nav {
+  background: lightgray;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+nav h1 {
+  flex: auto;
+  margin: 0;
+}
+
+nav h1 a {
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+}
+
+nav ul  {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a, nav ul li span, header .action {
+  display: block;
+  padding: 0.5rem;
+}
+
+
+.content {
+  padding: 0 1rem 1rem;
+  background-color: lightgray;
+}
+
+.content > header {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  align-items: flex-end;
+}
+
+.content > header h1 {
+  flex: auto;
+  margin: 1rem 0 0.25rem 0;
+}
+
+.flash {
+  margin: 1em 0;
+  padding: 1em;
+  background: #cae6f6;
+  border: 1px solid #377ba8;
+}
+
+.post > header {
+  display: flex;
+  align-items: flex-end;
+  font-size: 0.85em;
+}
+
+.post > header > div:first-of-type {
+  flex: auto;
+}
+
+.post > header h1 {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+
+.post .about {
+  color: slategray;
+  font-style: italic;
+}
+
+.post .body {
+  white-space: pre-line;
+}
+
+.content:last-child {
+  margin-bottom: 0;
+}
+
+/*.content form {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+}
+*/
+
+.content label {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.content input, .content textarea {
+  margin-bottom: 1em;
+}
+
+.content textarea {
+  min-height: 12em;
+  resize: vertical;
+}
+
+input.danger {
+  color: #cc2f2e;
+}
+
+input[type=submit] {
+  align-self: start;
+  min-width: 10em;
+}
+
+.inputField
+{
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  width: 250px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submitButton
+{
+  font-family: Roboto;
+  font-size: 14.75px;
+  color: #eeeeee;
+  letter-spacing: 1.25px;
+  width: 174px;
+  height: 40px;
+  line-height: 35px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: #424242;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.homeMenu
+{
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.homeMenuElement
+{
+  display: inline-block;
+  margin-left: 30px;
+  margin-right: 30px;
+  vertical-align: middle;
+}
+
+.homeMenuElement:first-child
+{
+  margin-left: 0px;
+}
+
+.homeMenuElement:last-child
+{
+  margin-right: 0px;
+}
+
+.homeMenuElementButton
+{
+  display: inline-block;
+  text-align: center;
+  width: 225px;
+  height: 150px;
+  border: solid 1px #777777;
+  border-radius: 10px;
+  background-image: linear-gradient(#5E5E5E, #303030);
+  box-shadow: 1px 4px 4px black;
+}
+
+.homeMenuElementIcon
+{
+  margin-top: 30px;
+  height: 65px;
+  width: 225px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.homeMenuElementIconHelper
+{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.homeMenuElementIcon img
+{
+    vertical-align: middle;
+    max-height: 65px;
+    max-width: 65px;
+}
+
+.homeMenuElementText
+{
+  font-size: 23.56px;
+  color: white;
+}
+
+.generalInfoTitle
+{
+  position: relative;
+  font-family: Roboto;
+  font-size: 28px;
+  color: black;
+}
+
+.chatTitle
+{
+    position:relative;
+    font-family: Roboto;
+    font-size: 22px;
+    color: black;
+}
+
+.faqTitle
+{
+  position: relative;
+  font-family: Roboto;
+  font-size: 32px;
+  color: black;
+}
+
+.generalInfoSubtitle
+{
+  padding-top: 29px;
+  font-family: Roboto;
+  font-size: 19.64px;
+  color: black;
+}
+
+.generalInfoSubtitleHeading
+{
+  padding-top: 29px;
+  padding-left: 200px;
+  font-family: Roboto;
+  font-size: 26px;
+  color: black;
+}
+
+.generalInfoInfo
+{
+  padding-top: 29px;
+  padding-left: 250px;
+  font-family: Roboto;
+  font-size: 20px;
+  color: black;
+  line-height: 1.3;
+}
+
+.resumeImage
+{
+  padding-top: 29px;
+  padding-left: 300px;
+}
+
+.loginForm
+{
+  padding-top: 29px;
+  padding-left: 250px;
+
+}
+
+.registerLoginHeading
+{
+  padding-top: 29px;
+  padding-left: 250px;
+}
+
+.advancedSettingsRadioList
+{
+  display: inline-block;
+  vertical-align: top;
+  font-size: 0;
+  width: 40%;
+}
+
+.advancedSettingsRadioListElement
+{
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.advancedSettingsRadioListElement:first-child
+{
+  padding-top: 0px;
+}
+
+.advancedSettingsRadioListElement:last-child
+{
+  padding-bottom: 0px;
+}
+
+.advancedSettingsRadio
+{
+}
+
+.advancedSettingsRadioInput
+{
+  cursor: pointer;
+}
+
+.advancedSettingsRadioLabel
+{
+  font-family: Roboto;
+  font-size: 15.71px;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding-top: 2px;
+}
+
+.chatLinkID
+{
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: bold;
+  color: red;
+  padding-bottom: 5px;
+}
+
+.systemDialog
+{
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1366px;
+  height: 768px;
+  text-align: center;
+  z-index: 50;
+}
+
+.systemDialog.login
+{
+  z-index: 48;
+}
+
+.systemDialogContainer
+{
+  margin-top: 274px;
+  margin-left: 481px;
+  width: 404px;
+  height: 220px;
+}
+
+.systemDialogContainer.large
+{
+  margin-top: 236px;
+  margin-left: 381px;
+  width: 604px;
+  height: 295px;
+}
+
+.systemDialogContainer.medium
+{
+  margin-top: 236px;
+  margin-left: 460px;
+  width: 447px;
+  height: 295px;
+}
+
+.systemDialogTitleBar
+{
+  width: 92.5%;
+  height: 36px;
+  border-radius: 15px 15px 0px 0px;
+  background-color: #606060;
+  text-align: left;
+  padding-left: 29px;
+  padding-top: 7px;
+}
+
+.systemDialogIcon
+{
+  display: inline-block;
+  vertical-align: middle;
+  width: 49px;
+  height: 44px;
+  margin-right: 45px;
+}
+
+.systemDialogTitle
+{
+  display: inline-block;
+  vertical-align: middle;
+  font-family: Roboto;
+  font-size: 19px;
+  color: white;
+  line-height: 44px;
+}
+
+.systemDialogTitle.center
+{
+  display: block;
+  text-align: center;
+  margin-left: -29px;
+}
+
+.systemDialogBody
+{
+  width: 100%;
+  border-radius: 0px 0px 15px 15px;
+  background-color: #303030;
+  text-align: center;
+}
+
+.systemDialogMessage
+{
+  width: 310px;
+  font-family: Roboto;
+  font-size: 18px;
+  line-height: 22px;
+  color: white;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.systemDialogMessage.grey
+{
+  color: #aaaaaa;
+}
+
+.systemDialogContainer.large .systemDialogMessage
+{
+  width: 500px;
+  padding-top: 31px;
+  padding-bottom: 26px;
+  letter-spacing: 0.6px;
+}
+
+.systemDialogButtons
+{
+  padding-bottom: 28px;
+}
+
+.systemDialogButton
+{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 9px;
+  margin-right: 9px;
+  width: 104px;
+  height: 36px;
+  border-radius: 4px;
+  line-height: 36px;
+  font-family: Roboto;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  background-color: #606060;
+}
+
+.systemDialogContainer.large .systemDialogButton
+{
+  width: 146px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.systemDialogButton.red
+{
+  background-color: #D82B26;
+}
+
+.systemDialogButton.green
+{
+  background-color: #1CBA52;
+}
+
+
+
+.hidden
+{
+  display: none;
+}
