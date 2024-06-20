@@ -19,6 +19,7 @@
         <button class="submitButton" onclick="copyText();">COPY LINK</button>
     </center>
     <br><br>
+
     <form class="loginForm" method="post" action="/editInfo" onsubmit="submitForm(event)">
         <!-- Sends 'name', not 'id' -->
     
@@ -68,9 +69,9 @@
         </div>
         <br>
 
-        <input type="radio" id="travelWorkYes" name="travelWork" value=1 {% if travelWork == '1' %}checked{% endif %}>
+        <input type="radio" id="travelWorkYes" name="travelWork" value="1" {% if travelWork == '1' %}checked{% endif %}>
         <label for="travelWorkYes">I am willing to travel for work</label><br>
-        <input type="radio" id="travelWorkNo" name="travelWork" value=0 {% if travelWork == '0' %}checked{% endif %}>
+        <input type="radio" id="travelWorkNo" name="travelWork" value="0" {% if travelWork == '0' %}checked{% endif %}>
         <label for="travelWorkNo">I am NOT willing to travel for work</label><br><br>
 
         <div class="registerLoginHeading">
@@ -78,9 +79,9 @@
         </div>
         <br>
 
-        <input type="radio" id="relocateYes" name="relocateWork" value=1 {% if relocateWork == '1' %}checked{% endif %}>
+        <input type="radio" id="relocateYes" name="relocateWork" value="1" {% if relocateWork == '1' %}checked{% endif %}>
         <label for="relocateYes">I am willing to relocate</label><br>
-        <input type="radio" id="relocateNo" name="relocateWork" value=0 {% if relocateWork == '0' %}checked{% endif %}>
+        <input type="radio" id="relocateNo" name="relocateWork" value="0" {% if relocateWork == '0' %}checked{% endif %}>
         <label for="relocateNo">I am NOT willing to relocate</label><br><br>
 
         <div class="registerLoginHeading">
@@ -111,11 +112,11 @@
         <br>
 
         <label for="currentProjects">Some of my current projects include:</label><br><br>
-        <textarea id="currentProjects" name="currentProjects" rows="8" cols="75" data-default="List any projects you are currently working on. Be descriptive, as it will help the AI to describe those projects to visitors!" placeholder="List any projects you are currently working on. Be descriptive, as it will help the AI to describe those projects to visitors!">{% if currentProjects != "" and currentProjects != "None" %}{{ currentProjects }}{% endif %}</textarea>
+        <textarea id="currentProjects" name="currentProjects" rows="8" cols="75" data-default="List any projects you are currently working on. Be descriptive, as it will help the AI to describe those projects to visitors!" placeholder="List any projects you are currently working on. Be descriptive, as it will help the AI describe those projects to visitors!">{% if currentProjects != "" and currentProjects != "None" %}{{ currentProjects }}{% endif %}</textarea>
         <br><br>
         
         <label for="pastProjects">Some of my past projects include:</label><br><br>
-        <textarea id="pastProjects" name="pastProjects" rows="8" cols="75" data-default="List any past projects you worked on that you are proud of. Again, be descriptive, as it will help the AI to describe those projects to visitors!" placeholder="List any past projects you worked on that you are proud of. Again, be descriptive, as it will help the AI to describe those projects to visitors!">{{ pastProjects }}</textarea>
+        <textarea id="pastProjects" name="pastProjects" rows="8" cols="75" data-default="List any past projects you worked on that you are proud of. Again, be descriptive, as it will help the AI to describe those projects to visitors!" placeholder="List any past projects you worked on that you are proud of. Again, be descriptive, as it will help the AI to describe those projects to visitors!">{% if pastProjects != "" and pastProjects != "None" %}{{ pastProjects }}{% endif %}</textarea>
         <br><br>
 
         <div class="registerLoginHeading">
@@ -184,10 +185,10 @@
             body: formData,
         })
         .then(response => response.json())
-        .then(data => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            var alertMessage = data.status + ": " + data.message + "\n" + "Upload your resume from the bottom of this page if necessary";
-            alertCustom(alertMessage);
+            .then(data => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		var alertMessage = data.status + ": " + data.message + "\n" + "Upload your resume from the bottom of this page if necessary";
+		alertCustom(alertMessage);
             // alert(alertMessage);
             // const messageBox = document.getElementById('messageBox');
             // messageBox.textContent = data.message;

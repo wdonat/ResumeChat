@@ -25,8 +25,7 @@ def addUser(f_name, e_address, u_name, pword):
     link = createLink()
     db = get_db()
     cursor = db.cursor()
-    cursor.execute('INSERT INTO USER (name, email, username, password, link_id, subscr_status) VALUES (?, ?, ?, ?, ?, ?)',
-                   (f_name, e_address, u_name, generate_password_hash(pword), link, 1),)
+    cursor.execute('INSERT INTO USER (name, email, username, password, link_id, subscr_status) VALUES (?, ?, ?, ?, ?, ?,)', (f_name, e_address, u_name, generate_password_hash(pword), link, 1), )
     db.commit()
     return cursor.lastrowid
 
@@ -39,10 +38,14 @@ def removeUser(u_name):
         return 'Success'
     except Error as e:
         error = str(e)
-    return error
+        return error
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    print(f'Session contents: {session}')
+    for key, value in session.items():
+        print(f'{key}: {value}')
+
     if request.method == 'POST':
         name = request.form['fullName']
         email = request.form['email']
@@ -64,21 +67,15 @@ def register():
             # Need to create unique link, insert into DB, then set g.link to whatever it is
             link = createLink()
             try:
-                user = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
-                # user = db.execute('SELECT * FROM USER WHERE id = ?', (2,)).fetchone()
+                user = db.execute('SELECT * FROM USER WHERE email = ?', (email,)).fetchone()
                 db.execute('''
                            UPDATE USER SET name = ?, email = ?, username = ?, 
                            password = ?, link_id = ?
                            WHERE id = ?
                 ''',
-                (name, email, username, generate_password_hash(password), link, session['user_id']
+                (name, email, username, generate_password_hash(password), link, user['id']
                 ))
-                # (name, email, username, generate_password_hash(password), link, 2))
                 db.commit()                            
-                # db.execute('INSERT INTO USER (email, username, password, link_id) VALUES (?, ?, ?, ?)',
-                #            (email, username, generate_password_hash(password), link),
-                # )
-                # db.commit()
 
             except db.IntegrityError:
                 error = f'User {username} is already registered.'
@@ -87,17 +84,17 @@ def register():
 
         flash(error)
     db = get_db()
-    user = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
-    # user = db.execute('SELECT * FROM USER WHERE id = ?', (2,)).fetchone()
-    return render_template('auth/register.html', fullName=user['name'], emailAddress=user['email'])
+    try:
+        user = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
+        return render_template('auth/register.html', fullName=user['name'], emailAddress=user['email'])
+    except KeyError:
+        return render_template('auth/register.html', fullName='', emailAdress='')
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print(username)
-        print(password)
         db = get_db()
         error = None
         user = db.execute('SELECT * FROM USER WHERE username = ?', (username,)).fetchone()
@@ -166,24 +163,21 @@ def account():
 
 @bp.route('/siteadmin', methods=['GET', 'POST'])
 def siteadmin():
-    if session['user_id'] != 1:
+    if session['user_id'] != 2:
         return redirect(url_for('application.index'))
-        
+    
     if request.method == 'POST':
         form_type = request.form.get('form_type')
         if form_type == 'add_user':
-            result = addUser(request.form.get('fullName'), 
-                             request.form.get('email'), 
-                             request.form.get('addUsername'), 
+            result = addUser(request.form.get('fullName'),
+                             request.form.get('email'),
+                             request.form.get('addUsername'),
                              request.form.get('password'))
             return jsonify(result)
-
         elif form_type == 'remove_user':
             result = removeUser(request.form.get('remUsername'))
             return jsonify(result)
-
     return render_template('auth/siteadmin.html')
-
 
 @bp.before_app_request
 def load_logged_in_user():

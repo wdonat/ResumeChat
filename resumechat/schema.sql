@@ -26,6 +26,5 @@ CREATE TABLE USER (
                     skills TEXT,
                     roles TEXT,
                     resume_text TEXT,
-                    info_text TEXT,
                     total_info TEXT
                 );

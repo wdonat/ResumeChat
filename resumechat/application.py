@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, g, redirect, jsonify
 from flask import render_template, request, session, url_for
+from . import create_app
 
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
@@ -25,7 +26,9 @@ from openai import OpenAI
 
 import stripe
 # stripe_endpoint_secret = 'we_1PN0JWFHYFg33VRtP3MmUnLu'
-stripe_endpoint_secret = 'whsec_9a2ce89e2d848565babdd24de424316c2393128446cdb9a5cd9a5c9dbf039721'
+#stripe_endpoint_secret = 'whsec_9a2ce89e2d848565babdd24de424316c2393128446cdb9a5cd9a5c9dbf039721'
+endpoint_secret = 'whsec_1eLcOiQxbehTsiPN8R1wJwqc1qzruZDC'
+stripe_endpoint_secret = 'whsec_1eLcOiQxbehTsiPN8R1wJwqc1qzruZDC'
 stripe.api_key = 'pk_live_51Oo6OgFHYFg33VRtbKgtaAYXa6Q0Oq3n2h7HBlsuJjQH5iYgKs9TkFRsezqvvlNCTzUToDjr71BoeRf5i4XqfLuy00rnEyaOxb'
 
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
@@ -33,6 +36,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, SentenceTran
 
 character_splitter = RecursiveCharacterTextSplitter(separators=['\n\n', '\n', '. ', ' ', ''], chunk_size=1000, chunk_overlap=0)
 token_splitter = SentenceTransformersTokenTextSplitter(chunk_overlap=0, tokens_per_chunk=256)
+
+logging.basicConfig(filename='/home/wolframdonat/chat_log.txt', level=logging.INFO)
 
 load_dotenv()
 
@@ -45,18 +50,9 @@ ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
 bp = Blueprint('application', __name__)
 
-# def initializeEmptyCollection():
-#     global chroma_collection
-#     embedding_function = SentenceTransformerEmbeddingFunction()
-#     chroma_client = chromadb.Client()
-
-
 def getChatWindowUserInfo(ident):
-    # ident is the link_id
-    # Search db for link_id, return
     global chroma_collection
     link_id = ident
-    print(link_id)
     info = ''
     try:
         db = get_db()
@@ -94,6 +90,7 @@ def deleteChatInfo():
 def createCustomer(cust):
     # cust['email']
     # cust['name']
+    print(cust)
     print('creating customer')
 
     db = get_db()
@@ -104,6 +101,7 @@ def createCustomer(cust):
     db.commit()
     session['user_id'] = cursor.lastrowid
     print(f'Customer created with local ID: {session["user_id"]}')
+    print(f'Session contents: {session}')
     return
 
 def deleteCustomer(cust):
@@ -131,18 +129,16 @@ def chunkSeparator(text_file):
     print(character_split_texts[:-1])
     print(f'\nTotal chunks: {len(character_split_texts)}')
 
-def rag(query, retrieved_documents, model='gpt-4o', temperature=0.3):
+def rag(query, retrieved_documents, model='gpt-4-turbo-2024-04-09', temperature=0.3):
     information = "\n\n".join(retrieved_documents)
-    messages = [{"role": "system", 
+    messages = [{"role": "system",
                  "content": "You are a helpful and friendly personal assistant. \
-                 Your users are recruiters and hiring managers asking questions about information contained in a person's resume and regarding some questions that the person has answered ahead of time. \
-                 You will be shown the user's question and the relevant information from the resume. \
+                 Your users are recruiters and hiring managers asking questions about information contained in a person's resume and regarding some questions that the person has answered ahead of time.\
+                 You will be shown the user's question and the relevant information from the resume and answered questions.\
                  Answer the user's question using only this information. \
-                 If you are unable to answer the question, politely inform the user that you do not have access \
-                 to that information and give the person's contact information. \
-                 If you don't think you have access to the person's contact information, check again - all of the people for whom you are answering questions have contact information available to you."}, 
-                 {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
-
+                 If you are unable to answer the question, politely inform the user that you do not have access to that information and give the person's contact information. \
+                 If you don't think you have access to the person's contact information, check again - all of the people for whom you are answering questions have contact information available to you."},
+                {"role": "user", "content": f"Question: {query}. \n Information: {information}"}]
     response = openai_client.chat.completions.create(model=model, messages=messages,)
     content = response.choices[0].message.content
     return content
@@ -242,6 +238,12 @@ def writeDataToFile(data):
 
         if data['roles'] != '':
             f.write('I am looking for roles such as: ' + data['roles'] + '. ')
+
+        # Write total_info to db (info_text)
+        with open('total_info.txt', 'r') as f:
+            tmp_info = f.readlines()
+        db.execute('UPDATE USER SET info_text = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
+        db.commit()
     return
 
 def writeUploadedResumeFileToDatabase(info: list):
@@ -285,33 +287,6 @@ def convertUploadedFile(file, file_name, uid):
         # Next, write to file that will be appended to
         with open('total_info.txt', 'w') as f:
             f.write(personal_info)
-
-        # # Pull any existing info out of total_info
-        # db = get_db()
-        # info_result = db.execute('SELECT * FROM USER WHERE id = ?', (session['user_id'],)).fetchone()
-        
-        # if info_result['total_info'] == '' or info_result['total_info'] is None:
-        #     # There's nothing in it, so just save the resume info into total_info
-        #     with open('resume_text.txt', 'r') as f:
-        #         tmp_info = f.readlines()
-        #         db.execute('UPDATE USER SET total_info = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
-        #         db.commit()
-
-        # else:
-        #     tmp_info = json.loads(info_result['total_info'])
-        #     with open('tmp_info.txt', 'w') as f:
-        #         for line in tmp_info:
-        #             f.wr
-
-        #     with open('total_info.txt', 'a') as f:
-
-
-
-
-
-        # if 'My full name is' in total_info[-1]:
-        #     # 
-        #     print(sd)
 
         print('PDF resume information written to file')
 
@@ -371,7 +346,6 @@ def editInfo():
     db = get_db()
     response = {'status': 'Error', 'message': 'Something went wrong'}
     user_id = session['user_id']
-    print(user_id)
 
     if request.method == 'POST':
         # print(request.form)
@@ -434,9 +408,6 @@ def editInfo():
             # append total_info.txt to it, 
             # and then save everything to the db. If the db has no resume info, just save this info to db
             resume_result = db.execute('SELECT * FROM USER WHERE id = ?', (user_id,)).fetchone()
-            # print(resume_result['resume_text'])
-            # print(type(resume_result['resume_text']))
-            # print(resume_result['resume_text'][0])
             if resume_result['resume_text'] == '' or resume_result['resume_text'] is None:
                 # Write total_info.txt to DB
                 with open('total_info.txt', 'r') as f:
@@ -444,7 +415,6 @@ def editInfo():
                     db.execute('UPDATE USER SET total_info = ? WHERE id = ?', (json.dumps(tmp_info), user_id))
                     db.commit()
             else:
-                print('line 423')
                 tmp_info = json.loads(resume_result['resume_text'])
                 with open('total_info.txt', 'r') as f:
                     for line in f.readlines():
@@ -484,12 +454,12 @@ def editInfo():
         salary_req = ''
     else:
         salary_req = user['salary']
-
+        
     return render_template('editinfo.html', user=g.user, link=g.link, 
         fullName=user['name'], emailAddress=user['email'], 
         phoneNumber=user['phone'], salaryRequirement=salary_req,
         onsiteInterest=str(user['on_site']), hybridInterest=str(user['hybrid']), 
-        remoteInterest=str(user['remote']), fulltimeWork=f_work,
+        remoteInterest=str(user['remote']), fulltimeWork=f_work, 
         parttimeWork=p_work, contractWork=c_work,
         travelWork=str(user['travel']), relocateWork=str(user['relocate']), 
         searchStatus=str(user['job_search_status']), startTime=str(user['notice_time']), 
@@ -551,13 +521,9 @@ def chat():
         data = request.get_json()
         user_message = data.get('message')
         link_id = data.get('id')
-        print(data)
 
-        # db = get_db()
-        # user = db.execute('SELECT * FROM USER WHERE link_id = ?', (link_id,)).fetchone()
         getChatWindowUserInfo(link_id)
         response = sendChatMessage(user_message)
-        print(response)
         return jsonify({'response': response})
     else:
         link_id = request.args.get('id')
@@ -570,28 +536,30 @@ def close_chat():
     data = request.get_json()
     unique_id = data.get('id')
 
-    # Do close-chat stuff here
     deleteChatInfo()
     return jsonify({'message': 'Chat closed successfully'})
 
 @bp.route('/webhook', methods=['POST'])
 def webhook():
     event = None
-    payload = request.data(as_text=True)
-    sig_header = request.headers['STRIPE_SIGNATURE']
+    payload = request.data
+#    sig_header = request.headers['STRIPE_SIGNATURE']
 
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, stripe_endpoint_secret
-        )
-    except ValueError as e:
-        # Invalid payload
-        raise e
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        raise e
+        event = json.loads(payload)
+    except json.decoder.JSONDecodeError as e:
+        print('Webhook error while parsing basic request.' + str(e))
+        return jsonify(success=False)
+    if endpoint_secret:
+        sig_header = request.headers.get('stripe_signature')
+        try:
+            event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+        except stripe.error.SignatureVerificationError as e:
+            print('Webhook signature verification failed.' + str(e))
+            return jsonify(success=False)
 
     # Handle the event
+    logging.info('%s', event['type'])
     if event['type'] == 'customer.created':
         customer = event['data']['object']
         createCustomer(customer)
@@ -602,19 +570,11 @@ def webhook():
 
     elif event['type'] == 'customer.updated':
         customer = event['data']['object']
+        pass
 
-    elif event['type'] == 'customer.source.created':
-        source = event['data']['object']
-    elif event['type'] == 'customer.source.deleted':
-        source = event['data']['object']
-    elif event['type'] == 'customer.source.expiring':
-        source = event['data']['object']
-    elif event['type'] == 'customer.source.updated':
-        source = event['data']['object']
     elif event['type'] == 'customer.subscription.created':
         subscription = event['data']['object']
         print(subscription)
-        # disableCustomer(subscription)
 
     elif event['type'] == 'customer.subscription.deleted':
         subscription = event['data']['object']
@@ -622,24 +582,32 @@ def webhook():
 
     elif event['type'] == 'customer.subscription.paused':
         subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.pending_update_applied':
-        subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.pending_update_expired':
-        subscription = event['data']['object']
+        pauseCustomer(subscription)
+
     elif event['type'] == 'customer.subscription.resumed':
         subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.trial_will_end':
+        resumeCustomer(subscription)
+
+    elif event['type'] == 'invoice.created':
+        invoice = event['data']['object']
+        pass
+
+    elif event['type'] == 'invoice.marked_uncollectible':
         subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.updated':
-        subscription = event['data']['object']
-    elif event['type'] == 'customer.tax_id.created':
-        tax_id = event['data']['object']
-    elif event['type'] == 'customer.tax_id.deleted':
-        tax_id = event['data']['object']
-    elif event['type'] == 'customer.tax_id.updated':
-        tax_id = event['data']['object']
+        pauseCustomer(subscription)
+
+    elif event['type'] == 'invoice.payment_succeeded':
+        customer = event['data']['object']
+        pass
+
     # ... handle other event types
     else:
         print('Unhandled event type {}'.format(event['type']))
 
     return jsonify(success=True)
+
+application = create_app()
+
+if __name__ == '__main__':
+    application.run(debug=True)
+    
