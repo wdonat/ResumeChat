@@ -25,11 +25,9 @@ import chromadb
 from openai import OpenAI
 
 import stripe
-# stripe_endpoint_secret = 'we_1PN0JWFHYFg33VRtP3MmUnLu'
-#stripe_endpoint_secret = 'whsec_9a2ce89e2d848565babdd24de424316c2393128446cdb9a5cd9a5c9dbf039721'
-endpoint_secret = 'whsec_1eLcOiQxbehTsiPN8R1wJwqc1qzruZDC'
-stripe_endpoint_secret = 'whsec_1eLcOiQxbehTsiPN8R1wJwqc1qzruZDC'
-stripe.api_key = 'pk_live_51Oo6OgFHYFg33VRtbKgtaAYXa6Q0Oq3n2h7HBlsuJjQH5iYgKs9TkFRsezqvvlNCTzUToDjr71BoeRf5i4XqfLuy00rnEyaOxb'
+endpoint_secret = 'xxxxx'
+stripe_endpoint_secret = 'xxxxx'
+stripe.api_key = 'xxxxx'
 
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from langchain.text_splitter import RecursiveCharacterTextSplitter, SentenceTransformersTokenTextSplitter
